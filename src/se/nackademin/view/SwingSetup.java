@@ -162,11 +162,4 @@ public class SwingSetup {
         //button.setFont(applyFont(Raleway));
         return button;
     }
-
-    public static JLabel createshoeIcon(String fileName) {
-        String logoPath = "src/se/jacobswenson/Resources/" + fileName;
-        JLabel logoShoe = new JLabel(new ImageIcon(logoPath));
-        logoShoe.setBorder(new EmptyBorder(10, 10, 10, 10));
-        return logoShoe;
-    }
 }
