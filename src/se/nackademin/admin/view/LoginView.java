@@ -1,16 +1,17 @@
-package se.nackademin.view;
+package se.nackademin.admin.view;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-import static se.nackademin.view.SwingSetup.*;
+import static se.nackademin.customer.view.SwingSetup.*;
 
 public class LoginView {
 
     private JTextField username = createTextField();
     private JPasswordField password= createPasswordField();
+
     private PanelHandler panelHandler;
     private JLabel errorText;
     private JButton loginButton;
@@ -25,8 +26,8 @@ public class LoginView {
         loginButton.setForeground(new Color(208, 228, 255));
 
         loginCenterPanel.setLayout(new GridLayout(3, 2,20,20));
-        loginCenterPanel.add(createLabel("Personnummer",2));
-        loginCenterPanel.add(createLabel("Pinkod",2));
+        loginCenterPanel.add(createLabel("Användarnamn",2));
+        loginCenterPanel.add(createLabel("Lösenord",2));
         loginCenterPanel.add(username);
         loginCenterPanel.add(password);
         loginCenterPanel.add(createLabel("",0));

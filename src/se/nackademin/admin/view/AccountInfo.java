@@ -1,13 +1,13 @@
-package se.nackademin.view;
+package se.nackademin.admin.view;
 
-import se.nackademin.model.Account;
+import se.nackademin.admin.model.Account;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-import static se.nackademin.view.SwingSetup.*;
+import static se.nackademin.admin.view.SwingSetup.*;
 
 public class AccountInfo {
 

@@ -1,4 +1,4 @@
-package se.nackademin.model;
+package se.nackademin.customer.model;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package se.nackademin.model;
+package se.nackademin.customer.model;
 
 public class Loan {
 

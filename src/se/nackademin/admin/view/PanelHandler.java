@@ -1,7 +1,7 @@
-package se.nackademin.view;
+package se.nackademin.admin.view;
 
-import se.nackademin.model.Account;
-import se.nackademin.model.Loan;
+import se.nackademin.admin.model.Account;
+import se.nackademin.admin.model.Loan;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,6 +1,6 @@
-package se.nackademin.repository;
+package se.nackademin.customer.repository;
 
-import se.nackademin.model.*;
+import se.nackademin.customer.model.*;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -16,7 +16,7 @@ public class Repository {
 
     public Repository() {
         try {
-        info.load(new FileInputStream("src/se/nackademin/settings/settings.properties"));
+        info.load(new FileInputStream("src/se/nackademin/customer/settings/settings.properties"));
     } catch (
     IOException e) {
         e.getMessage();

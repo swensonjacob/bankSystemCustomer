@@ -1,8 +1,8 @@
-package se.nackademin.controller;
+package se.nackademin.customer.controller;
 
-import se.nackademin.model.Customer;
-import se.nackademin.repository.Repository;
-import se.nackademin.view.PanelHandler;
+import se.nackademin.customer.model.Customer;
+import se.nackademin.customer.repository.Repository;
+import se.nackademin.customer.view.PanelHandler;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

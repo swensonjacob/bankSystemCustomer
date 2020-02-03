@@ -1,13 +1,13 @@
-package se.nackademin.view;
+package se.nackademin.customer.view;
 
-import se.nackademin.model.Loan;
+import se.nackademin.customer.model.Loan;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-import static se.nackademin.view.SwingSetup.*;
+import static se.nackademin.customer.view.SwingSetup.*;
 
 public class LoanInfo {
 
