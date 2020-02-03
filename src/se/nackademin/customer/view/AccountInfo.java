@@ -1,32 +1,43 @@
 package se.nackademin.customer.view;
 
 import se.nackademin.customer.model.Account;
+import se.nackademin.customer.model.AccountHistory;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.util.Collections;
+import java.util.List;
 
 import static se.nackademin.customer.view.SwingSetup.*;
 
 public class AccountInfo {
-
     private JPanel accountPanel;
     private Account currentAccount;
     private PanelHandler panelHandler;
     private DefaultListModel accountTransactions;
     private JButton backButton;
+    private JTextField withdrawSum;
+    private JButton withdrawButton;
 
-    public AccountInfo(PanelHandler panelHandler, ActionListener listener) {
-
+    public AccountInfo(PanelHandler panelHandler, ActionListener backListener, ActionListener withdrawListener, Account account) {
+        this.accountPanel = createPanel();
         this.panelHandler = panelHandler;
+        this.currentAccount = account;
         accountTransactions = new DefaultListModel();
         backButton = createBackButton();
+        withdrawButton = createButton("Ta ut pengar");
+        withdrawButton.setName(Integer.toString(currentAccount.getId()));
+        withdrawSum = createTextField();
+
 
         showTransactionHistory();
         JList list = createJList(accountTransactions);
 
-        backButton.addActionListener(listener);
+        backButton.addActionListener(backListener);
+        withdrawButton.addActionListener(withdrawListener);
+
         JPanel btnPanel = createPanel();
         btnPanel.setLayout(new GridLayout(2,1,10,10));
         btnPanel.add(backButton);
@@ -35,8 +46,6 @@ public class AccountInfo {
 
         JPanel withdrawPanel = createPanel();
         withdrawPanel.setLayout(new GridLayout(2,2,10,10));
-        JTextField withdrawSum = createTextField();
-        JButton withdrawButton = createButton("Ta ut pengar");
         withdrawPanel.add(createLabel("Ange belopp",2));
         withdrawPanel.add(new JLabel());
         withdrawPanel.add(withdrawSum);
@@ -45,8 +54,8 @@ public class AccountInfo {
 
         JPanel accountInfoPanel = createPanel();
         accountInfoPanel.setLayout(new GridLayout(4,1));
-        accountInfoPanel.add(createBigLabel("Konto 213123123123123",2));
-        accountInfoPanel.add(createLabel("Saldo: 100 000" ,2));
+        accountInfoPanel.add(createBigLabel("Konto " + currentAccount.getAccountName(),2));
+        accountInfoPanel.add(createLabel("Saldo: " + Math.round(currentAccount.getBalance()) + " kr" ,2));
         accountInfoPanel.add(createLabel("Uttag",2));
         accountInfoPanel.add(withdrawPanel);
         accountInfoPanel.setBorder(new EmptyBorder(0,50,0,50));
@@ -56,7 +65,6 @@ public class AccountInfo {
         paymentList.setBackground(new Color(208, 228, 255));
         paymentList.setBorder(new EmptyBorder(10,10,10,10));
 
-        accountPanel = createPanel();
         accountPanel.setLayout(new BorderLayout());
         accountPanel.add(createLogo(),BorderLayout.NORTH);
         accountPanel.add(accountInfoPanel,BorderLayout.CENTER);
@@ -67,11 +75,29 @@ public class AccountInfo {
     }
 
     public void showTransactionHistory () {
+        List<AccountHistory> transactions = currentAccount.getAccountTransactions();
+        Collections.reverse(transactions);
         accountTransactions.addElement("Kontohistorik:");
-        accountTransactions.addElement("2019-02-01, Uttag -1 000, Saldo: 15 000");
-        }
-
-
-
+        transactions.forEach(t -> {
+            accountTransactions.addElement(t.getDate() + "," + t.getTransactionType() +
+                    " " + Math.round(t.getAmount()) + " kr , Saldo: " + Math.round(t.getBalanceAfterAction()) + " kr");
+        });
     }
+
+    public JTextField getWithdrawSum() {
+        return withdrawSum;
+    }
+
+    public void setWithdrawSum(JTextField withdrawSum) {
+        this.withdrawSum = withdrawSum;
+    }
+
+    public Account getCurrentAccount() {
+        return currentAccount;
+    }
+
+    public void setCurrentAccount(Account currentAccount) {
+        this.currentAccount = currentAccount;
+    }
+}
 

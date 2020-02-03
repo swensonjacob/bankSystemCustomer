@@ -27,7 +27,7 @@ public class SwingSetup {
             label2 = "Lånebelopp:";
         }
 
-        String btnText ="<html>" + label1+ " - " + numberId + "<br>" + label2 + " - " + balance + " kr" + "</html>";
+        String btnText ="<html>" + label1+ " - " + numberId + "<br>" + label2 + " - " + Math.round(balance) + " kr" + "</html>";
         JButton button = new JButton(btnText);
         button.setForeground(new Color(16, 123, 214));
         button.setBackground(new Color(208, 228, 255));

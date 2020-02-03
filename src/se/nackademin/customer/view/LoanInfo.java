@@ -17,13 +17,14 @@ public class LoanInfo {
     private DefaultListModel loanPayments;
     private JButton backButton;
 
-    public LoanInfo(PanelHandler panelHandler, ActionListener listener) {
+    public LoanInfo(PanelHandler panelHandler, ActionListener listener, Loan loan) {
 
         this.panelHandler = panelHandler;
+        this.currentLoan = loan;
         loanPayments = new DefaultListModel();
         backButton = createBackButton();
 
-        calculateDownPaymentPlan(10000,24,2.4);
+        calculateDownPaymentPlan(currentLoan.getAmount(),currentLoan.getLoanTime(),currentLoan.getInterest().getInterestRate());
         JList list = createJList(loanPayments);
 
         backButton.addActionListener(listener);
@@ -35,10 +36,10 @@ public class LoanInfo {
 
         JPanel loanInfoPanel = createPanel();
         loanInfoPanel.setLayout(new GridLayout(4,1));
-        loanInfoPanel.add(createBigLabel("Lån 213123123123123",2));
-        loanInfoPanel.add(createLabel("Kapitalskuld: 100 000" ,2));
-        loanInfoPanel.add(createLabel("Räntesats: 2.3%" ,2));
-        loanInfoPanel.add(createLabel("Amorteringsbelopp: 417 kr" ,2));
+        loanInfoPanel.add(createBigLabel("Lån " + currentLoan.getLoanNumber(),2));
+        loanInfoPanel.add(createLabel("Kapitalskuld: " + Math.round(currentLoan.getAmount()) + " kr" ,2));
+        loanInfoPanel.add(createLabel("Räntesats: " + currentLoan.getInterest().getInterestRate() + " %",2));
+        loanInfoPanel.add(createLabel("Amorteringsbelopp: " + Math.round(calculateAmortization(currentLoan.getAmount(),currentLoan.getLoanTime())) + " kr" ,2));
         loanInfoPanel.setBorder(new EmptyBorder(0,160,0,0));
 
         JScrollPane paymentList = new JScrollPane(list);
@@ -58,15 +59,16 @@ public class LoanInfo {
 
     public void calculateDownPaymentPlan(double loanAmount, int loanTerm, double interestRate) {
         loanPayments.addElement("Avbetalning:");
-        double amortization = loanAmount/loanTerm;
+        double amortization =calculateAmortization(loanAmount,loanTerm);
         int count = 1;
-        while (loanAmount>0) {
-           loanPayments.addElement("Månad " + count + " - Ränta: " + Math.round(loanAmount/interestRate) + " Amortering:" + Math.round(amortization) + " Kapitalskuld: " + Math.round(loanAmount));
-            loanAmount-=amortization;
+        while (loanAmount > 0) {
+            loanPayments.addElement("Månad " + count + " - Ränta: " + Math.round(loanAmount / interestRate/12) + " Amortering:" + Math.round(amortization) + " Kapitalskuld: " + Math.round(loanAmount));
+            loanAmount -= amortization;
             count++;
         }
-
-
+    }
+    public double calculateAmortization(double loanAmount, int loanTerm) {
+        return loanAmount / loanTerm;
 
     }
 }
