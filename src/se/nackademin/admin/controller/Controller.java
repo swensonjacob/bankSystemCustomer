@@ -21,8 +21,6 @@ public class Controller {
         panelHandler.getCreateCustomerView().addListener(new CreateCustomerListener());
         panelHandler.getUpdateCustomerView().addListener(new UpdateCustomerListener());
 
-
-
     }
 
     class CreateCustomerListener implements ActionListener {
@@ -32,7 +30,6 @@ public class Controller {
 
             if (!textFieldEmpty()) {
                 //repo create customer
-                changeToMainMenu();
             } else {
                 panelHandler.getCreateCustomerView().getErrorText().setText("Samtliga fält måste fyllas i");
             }
@@ -46,7 +43,6 @@ public class Controller {
 
             if (!textFieldEmpty()) {
                 //repo update customer
-                changeToMainMenu();
             } else {
                 panelHandler.getCreateCustomerView().getErrorText().setText("Samtliga fält måste fyllas i");
             }
@@ -125,11 +121,6 @@ public class Controller {
         } else {
             return false;
         }
-        }
-
-        private void changeToMainMenu() {
-            panelHandler.changeToMainMenu(new AccountButtonListener(),new LoanButtonListener(),
-                    repository.getLoansFromCustomer(currentCustomer), repository.getAccountFromCustomer(currentCustomer));
         }
 
         private boolean textFieldEmpty() {

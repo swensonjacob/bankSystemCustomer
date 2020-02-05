@@ -46,7 +46,7 @@ public class CustomerView {
         actionButtons.add(viewLoans);
         viewLoans.setPreferredSize(buttonBounds);
 
-        JButton deleate = SwingSetup.createButton("Radera kund");
+        JButton deleate = SwingSetup.createButton("Hantera kund");
         actionButtons.add(deleate);
         deleate.setPreferredSize(buttonBounds);
 

@@ -1,5 +1,7 @@
 package se.nackademin.admin.view;
 
+import se.nackademin.customer.view.MainMenuView;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -19,7 +21,6 @@ public class PanelHandler extends JFrame{
     private CustomerView customerView;
     private JPanel createCustomerPanel;
     private JPanel updateCustomerPanel;
-    private MainMenuView mainMenuView;
     private LoanInfo loanInfo;
     private AccountInfo accountInfo;
     private LoginView loginView;
@@ -96,8 +97,6 @@ public class PanelHandler extends JFrame{
         changePanel("updateCustomer");
     }
 
-    public MainMenuView getMainMenuView() {
-        return mainMenuView;
     public CustomerView getCustomerView() {
         return this.customerView;
     }
@@ -185,7 +184,6 @@ public class PanelHandler extends JFrame{
     public void setUpdateCustomerView(UpdateCustomer updateCustomerView) {
         this.updateCustomerView = updateCustomerView;
     }
-}
 
     public void setSearchView(SearchPanel searchview) {
         this.searchView = searchview;
