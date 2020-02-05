@@ -36,14 +36,8 @@ public class PanelHandler extends JFrame{
         mainPanel = new JPanel(cardLayout);
         mainPanel.add(loginPanel,"login");
         mainPanel.add(searchPanel, "search");
-
-        AccountInfo info = new AccountInfo(this, null);
-        LoanInfo loan = new LoanInfo(this, null);
-        mainPanel.add(accountPanel, "account");
-
         mainPanel.add(updateCustomerPanel,"updateCustomer");
         mainPanel.add(createCustomerPanel,"createCustomer");
-
 
         add(mainPanel);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
