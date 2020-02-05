@@ -38,7 +38,6 @@ public class LoginView {
         loginPanel.setLayout(new BorderLayout());
         errorText= createLabel("",0);
         errorText.setVerticalAlignment(JLabel.CENTER);
-        loginPanel.setLayout(new BorderLayout());
         loginPanel.add(createLogo(), BorderLayout.NORTH);
         loginPanel.add(errorText, BorderLayout.CENTER);
         loginPanel.add(loginCenterPanel, BorderLayout.SOUTH);
