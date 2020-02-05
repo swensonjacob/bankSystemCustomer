@@ -3,6 +3,7 @@ package se.nackademin.admin.repository;
 import se.nackademin.admin.model.*;
 
 import javax.swing.*;
+import javax.xml.crypto.dsig.spec.XPathFilterParameterSpec;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.*;
@@ -18,13 +19,38 @@ public class Repository {
 
     public Repository() {
         try {
-        info.load(new FileInputStream("src/se/nackademin/settings/settings.properties"));
-    } catch (
-    IOException e) {
-        e.getMessage();
-        e.printStackTrace();
+            info.load(new FileInputStream("src/se/nackademin/settings/settings.properties"));
+        } catch (
+                IOException e) {
+            e.getMessage();
+            e.printStackTrace();
+        }
     }
-}
+
+
+    public boolean verifyAdminPin(String userName,String pinCode){
+        try (
+                Connection conn = DriverManager.getConnection(info.getProperty("connectionString"),
+                        info.getProperty("user"),
+                        info.getProperty("password"));
+                PreparedStatement pstatement = conn.prepareStatement("select count(*) from Admin where username = ? and password = ? ")){
+                pstatement.setString(1,userName);
+                pstatement.setString(2, pinCode);
+                ResultSet result = pstatement.executeQuery();
+                if (result.next()){
+                  if (result.getInt(1) == 1){
+                      return true;
+                  }
+                  return false;
+                }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+
     public boolean verifyPersonalNumber(String personalNr) {
         try (
                 Connection conn = DriverManager.getConnection(info.getProperty("connectionString"),
@@ -39,6 +65,7 @@ public class Repository {
                 return false;
             } else {
                 return true;
+
             }
 
         } catch (
@@ -49,44 +76,37 @@ public class Repository {
         }
     }
 
-        public Customer verifyPin(String personalNr, String pinCode) {
-            try (
-                    Connection conn = DriverManager.getConnection(info.getProperty("connectionString"),
-                            info.getProperty("user"),
-                            info.getProperty("password"));
-                    PreparedStatement pstatement = conn.prepareStatement("SELECT Count(*) FROM Customer where personalNr = ? AND pinCode = ?");
-                    PreparedStatement pstatement2 = conn.prepareStatement("SELECT * FROM Customer where personalNr = ? AND pinCode = ?")) {
+    public Customer getCurrCustomer(String personalNr) {
+        try (
+                Connection conn = DriverManager.getConnection(info.getProperty("connectionString"),
+                        info.getProperty("user"),
+                        info.getProperty("password"));
+                PreparedStatement pstatement = conn.prepareStatement("SELECT * FROM Customer where personalNr = ? ")) {
+            pstatement.setString(1, personalNr);
 
-                pstatement.setString(1, personalNr);
-                pstatement.setString(2, pinCode);
-                ResultSet result = pstatement.executeQuery();
-                result.next();
+            ResultSet result = pstatement.executeQuery();
 
-                if (result.getInt(1) == 0) {
-                    return null;
-                } else {
-                    pstatement2.setString(1, personalNr);
-                    pstatement2.setString(2, pinCode);
-                    result = pstatement2.executeQuery();
-                    while (result.next()) {
-                        Customer customer = new Customer();
-                        customer.setId(result.getInt(1));
-                        customer.setFirstName(result.getString(2));
-                        customer.setLastName(result.getString(3));
-                        customer.setPersonalNumber(result.getString(4));
-                        customer.setPinCode(result.getString(5));
-                        return customer;
-                    }
-                }
-
-            } catch (
-                    SQLException e) {
-                System.out.println(e.getMessage());
-                e.printStackTrace();
-                return null;
+            while (result.next()) {
+                Customer customer = new Customer();
+                customer.setId(result.getInt(1));
+                customer.setFirstName(result.getString(2));
+                customer.setLastName(result.getString(3));
+                customer.setPersonalNumber(result.getString(4));
+                customer.setPinCode(result.getString(5));
+                return customer;
             }
+
+    } catch(
+    SQLException e)
+
+    {
+        System.out.println(e.getMessage());
+        e.printStackTrace();
+        return null;
+    }
             return null;
-        }
+}
+
     public List<Loan> getLoansFromCustomer(Customer customer) {
         try (
                 Connection conn = DriverManager.getConnection(info.getProperty("connectionString"),
@@ -94,12 +114,11 @@ public class Repository {
                         info.getProperty("password"));
                 PreparedStatement pstatement = conn.prepareStatement("SELECT * FROM Loan" +
                         " INNER JOIN Customer on Loan.customerId = Customer.id WHERE Customer.id = ?");
-                PreparedStatement pstatementInterest = conn.prepareStatement("SELECT * FROM Interest WHERE Interest.id = ?"))
-                 {
+                PreparedStatement pstatementInterest = conn.prepareStatement("SELECT * FROM Interest WHERE Interest.id = ?")) {
 
-            pstatement.setInt(1,customer.getId());
+            pstatement.setInt(1, customer.getId());
             ResultSet result = pstatement.executeQuery();
-            List<Loan> loans =new ArrayList<>();
+            List<Loan> loans = new ArrayList<>();
             while (result.next()) {
                 Loan loan = new Loan();
                 loan.setId(result.getInt(1));
@@ -111,8 +130,8 @@ public class Repository {
                 loans.add(loan);
             }
 
-            for(Loan loan:loans) {
-                pstatementInterest.setInt(1,loan.getId());
+            for (Loan loan : loans) {
+                pstatementInterest.setInt(1, loan.getId());
                 result = pstatementInterest.executeQuery();
                 while (result.next()) {
                     Interest interest = new Interest();
@@ -121,7 +140,7 @@ public class Repository {
                     interest.setInterestRate(result.getDouble(3));
                     loan.setInterest(interest);
                 }
-                }
+            }
             return loans;
 
         } catch (
@@ -132,6 +151,7 @@ public class Repository {
         }
 
     }
+
     public List<Account> getAccountFromCustomer(Customer customer) {
         try (
                 Connection conn = DriverManager.getConnection(info.getProperty("connectionString"),
@@ -141,12 +161,11 @@ public class Repository {
                         " INNER JOIN Customer on Account.customerId = Customer.id WHERE Customer.id = ?");
                 PreparedStatement pstatementInterest = conn.prepareStatement("SELECT * FROM Interest WHERE Interest.id = ?");
                 PreparedStatement pstatementTransactions = conn.prepareStatement("SELECT * FROM AccountHistory" +
-                        " INNER JOIN Account on Account.id = AccountHistory.accountId WHERE Account.id = ?"))
-        {
+                        " INNER JOIN Account on Account.id = AccountHistory.accountId WHERE Account.id = ?")) {
 
-            pstatement.setInt(1,customer.getId());
+            pstatement.setInt(1, customer.getId());
             ResultSet result = pstatement.executeQuery();
-            List<Account> accounts =new ArrayList<>();
+            List<Account> accounts = new ArrayList<>();
             while (result.next()) {
                 Account account = new Account();
                 account.setId(result.getInt(1));
@@ -157,8 +176,8 @@ public class Repository {
                 accounts.add(account);
             }
 
-            for(Account account:accounts) {
-                pstatementInterest.setInt(1,account.getId());
+            for (Account account : accounts) {
+                pstatementInterest.setInt(1, account.getId());
                 result = pstatementInterest.executeQuery();
                 while (result.next()) {
                     Interest interest = new Interest();
@@ -167,7 +186,7 @@ public class Repository {
                     interest.setInterestRate(result.getDouble(3));
                     account.setInterest(interest);
                 }
-                pstatementTransactions.setInt(1,account.getId());
+                pstatementTransactions.setInt(1, account.getId());
                 result = pstatementTransactions.executeQuery();
                 while (result.next()) {
                     AccountHistory accountHistory = new AccountHistory();
@@ -191,6 +210,7 @@ public class Repository {
         }
 
     }
+
     public boolean deleteAccount(int accountID) {
         try (
                 Connection conn = DriverManager.getConnection(info.getProperty("connectionString"),
@@ -419,10 +439,10 @@ public class Repository {
                         "join Account on customerid = Customer.id " +
                         "join AccountHistory ah on accountid = Account.id " +
                         "where ah.date between ? and ?")) {
-            stm.setString(1,firstDate);
+            stm.setString(1, firstDate);
             stm.setString(2, String.valueOf(LocalDate.parse(lastDate).plusDays(1)));
             ResultSet rs = stm.executeQuery();
-            while(rs.next()) {
+            while (rs.next()) {
                 AccountHistory accountHistory = new AccountHistory();
                 accountHistory.setId(rs.getInt(1));
                 accountHistory.setAccountId(rs.getInt(2));
@@ -451,13 +471,18 @@ public class Repository {
         //test.changeLoanTimebyMonth(3,24);
         //test.updateBalanceForAccount(5,10);
         //test.addNewAccount("12345678",1);
-        for (AccountHistory a : test.getAccountHistory("2016-01-01","2020-02-05")){
+        /*
+        for (AccountHistory a : test.getAccountHistory("2016-01-01", "2020-02-05")) {
             System.out.println(a.getId());
             System.out.println(a.getDate());
+        */
+        System.out.println(test.verifyAdminPin("Lle","Pelle"));
+        System.out.println(test.getCurrCustomer("890206").getFirstName());
+
         }
 
     }
-}
+
 
 
 

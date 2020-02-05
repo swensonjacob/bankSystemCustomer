@@ -30,6 +30,7 @@ public class Controller {
             return repository.verifyPersonalNumber(personalNr);
         }
 
+        /*
         private boolean passwordCorrect(String username, String password) {
         Customer customer = repository.verifyPin(username,password);
         if (customer!= null) {
@@ -39,6 +40,8 @@ public class Controller {
             return false;
         }
         }
+
+         */
 
         public boolean textFieldEmpty() {
         if (panelHandler.getCreateCustomerView().getFirstName().getText().equals("") ||

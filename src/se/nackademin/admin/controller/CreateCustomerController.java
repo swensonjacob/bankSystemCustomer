@@ -19,6 +19,7 @@ public class CreateCustomerController {
         @Override
         public void actionPerformed(ActionEvent e) {
 
+
             if (!controller.textFieldEmpty()) {
                 controller.getPanelHandler().changeToCustomerView();
             } else {
