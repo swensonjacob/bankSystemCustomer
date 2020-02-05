@@ -476,8 +476,8 @@ public class Repository {
             System.out.println(a.getId());
             System.out.println(a.getDate());
         */
-        System.out.println(test.verifyAdminPin("Lle","Pelle"));
-        System.out.println(test.getCurrCustomer("890206").getFirstName());
+        //System.out.println(test.verifyAdminPin("Lle","Pelle"));
+        //System.out.println(test.getCurrCustomer("890206").getFirstName());
 
         }
 
