@@ -16,7 +16,14 @@ public class SearchController {
     class SearchListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            controller.getPanelHandler().changeToCustomerView();
+            String personalNR = controller.getPanelHandler().getSearchPanel().getSearchField();
+
+            if (controller.getRepository().verifyPersonalNumber(personalNR)) {
+//                controller.setCurrentCustomer(controller.getRepository().getCurrCustomer(personalNR)); // måste pushas in det nya
+                controller.getPanelHandler().changeToAdminMenu(controller.getAdminMenuController().getNewMenuButtonListener());
+            } else {
+                controller.getPanelHandler().getSearchPanel().getErrorText().setText("Felaktigt personnummer");
+            }
         }
     }
 

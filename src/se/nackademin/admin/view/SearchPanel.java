@@ -51,6 +51,7 @@ public class SearchPanel {
         panelHandler.setSearchPanel(searchPanel);
     }
 
+
     public String getSearchField() {
         return this.searchField.getText();
     }

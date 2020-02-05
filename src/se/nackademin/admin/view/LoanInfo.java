@@ -17,13 +17,19 @@ public class LoanInfo {
     private DefaultListModel loanPayments;
     private JButton backButton;
 
+    private JTextField rentInput;
+    private JButton editRent;
+    private JTextField loanTermInput;
+    private JButton editTerm;
+
     public LoanInfo(PanelHandler panelHandler, ActionListener listener) {
 
         this.panelHandler = panelHandler;
+
         loanPayments = new DefaultListModel();
 
 
-        calculateDownPaymentPlan(10000,24,2.4);
+        //calculateDownPaymentPlan(10000,24,2.4);
         JList list = createJList(loanPayments);
 
         backButton = createBackButton();
@@ -35,12 +41,36 @@ public class LoanInfo {
         btnPanel.setPreferredSize(new Dimension(80,60));
 
         JPanel loanInfoPanel = createPanel();
-        loanInfoPanel.setLayout(new GridLayout(4,1));
-        loanInfoPanel.add(createBigLabel("Lån 213123123123123",2));
-        loanInfoPanel.add(createLabel("Kapitalskuld: 100 000" ,2));
-        loanInfoPanel.add(createLabel("Räntesats: 2.3%" ,2));
-        loanInfoPanel.add(createLabel("Amorteringsbelopp: 417 kr" ,2));
-        loanInfoPanel.setBorder(new EmptyBorder(0,160,0,0));
+        loanInfoPanel.setLayout(new GridLayout(2, 1));
+
+
+        JPanel infoContainer = SwingSetup.createPanel();
+        loanInfoPanel.add(infoContainer);
+        infoContainer.setLayout(new GridLayout(1,2, 10, 10));
+
+        infoContainer.add(createBigLabel("Lån: ", 2));
+        infoContainer.add(createLabel("Kapitalskuld: " , 2 ));
+
+        JPanel inputPanel = SwingSetup.createPanel();
+        loanInfoPanel.add(inputPanel);
+        inputPanel.setLayout(new GridLayout(2, 3, 10, 10));
+
+        rentInput = SwingSetup.createTextField();
+        editRent = SwingSetup.createButton("Verkställ");
+
+        inputPanel.add(SwingSetup.createLabel("Ändra ränta:",0));
+        inputPanel.add(rentInput);
+        inputPanel.add(editRent);
+
+        loanTermInput = SwingSetup.createTextField();
+        editTerm = SwingSetup.createButton("Verkställ");
+
+        inputPanel.add(SwingSetup.createLabel("Ändra lånetid:",0));
+        inputPanel.add(loanTermInput);
+        inputPanel.add(editTerm);
+
+
+        loanInfoPanel.setBorder(new EmptyBorder(50,60,50,60));
 
         JScrollPane paymentList = new JScrollPane(list);
 
@@ -53,8 +83,8 @@ public class LoanInfo {
         loanPanel.add(loanInfoPanel,BorderLayout.CENTER);
         loanPanel.add(btnPanel,BorderLayout.WEST);
         loanPanel.add(paymentList,BorderLayout.SOUTH);
-        panelHandler.setLoanPanel(loanPanel);
 
+        panelHandler.setLoanPanel(loanPanel);
     }
 
     public void calculateDownPaymentPlan(double loanAmount, int loanTerm, double interestRate) {

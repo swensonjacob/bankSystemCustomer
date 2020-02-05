@@ -3,7 +3,6 @@ package se.nackademin.admin.repository;
 import se.nackademin.admin.model.*;
 
 import javax.swing.*;
-import javax.xml.crypto.dsig.spec.XPathFilterParameterSpec;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.*;
@@ -27,30 +26,6 @@ public class Repository {
         }
     }
 
-
-    public boolean verifyAdminPin(String userName,String pinCode){
-        try (
-                Connection conn = DriverManager.getConnection(info.getProperty("connectionString"),
-                        info.getProperty("user"),
-                        info.getProperty("password"));
-                PreparedStatement pstatement = conn.prepareStatement("select count(*) from Admin where username = ? and password = ? ")){
-                pstatement.setString(1,userName);
-                pstatement.setString(2, pinCode);
-                ResultSet result = pstatement.executeQuery();
-                if (result.next()){
-                  if (result.getInt(1) == 1){
-                      return true;
-                  }
-                  return false;
-                }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-
     public boolean verifyPersonalNumber(String personalNr) {
         try (
                 Connection conn = DriverManager.getConnection(info.getProperty("connectionString"),
@@ -65,7 +40,6 @@ public class Repository {
                 return false;
             } else {
                 return true;
-
             }
 
         } catch (
@@ -83,9 +57,7 @@ public class Repository {
                         info.getProperty("password"));
                 PreparedStatement pstatement = conn.prepareStatement("SELECT * FROM Customer where personalNr = ? ")) {
             pstatement.setString(1, personalNr);
-
             ResultSet result = pstatement.executeQuery();
-
             while (result.next()) {
                 Customer customer = new Customer();
                 customer.setId(result.getInt(1));
@@ -95,17 +67,34 @@ public class Repository {
                 customer.setPinCode(result.getString(5));
                 return customer;
             }
-
-    } catch(
-    SQLException e)
-
-    {
-        System.out.println(e.getMessage());
-        e.printStackTrace();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+            return null;
+        }
         return null;
     }
-            return null;
-}
+
+    public boolean verifyAdminPin(String userName, String pinCode) {
+        try (
+                Connection conn = DriverManager.getConnection(info.getProperty("connectionString"),
+                        info.getProperty("user"),
+                        info.getProperty("password"));
+                PreparedStatement pstatement = conn.prepareStatement("select count(*) from Admin where username = ? and password = ? ")) {
+            pstatement.setString(1, userName);
+            pstatement.setString(2, pinCode);
+            ResultSet result = pstatement.executeQuery();
+            if (result.next()) {
+                if (result.getInt(1) == 1) {
+                    return true;
+                }
+                return false;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 
     public List<Loan> getLoansFromCustomer(Customer customer) {
         try (
@@ -310,14 +299,14 @@ public class Repository {
             return true;
 
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Något gick fel, Kund kunde ej läggas till ");
             System.out.println(e.getMessage());
             e.printStackTrace();
             return false;
         }
     }
 
-    public boolean updateCustomerInfo(int customerID, String firstName, String lastName, String personalNr, String pinCode) {
+    public boolean updateCustomerInfo(int customerID, String firstName, String lastName, String personalNr, String
+            pinCode) {
         try (
                 Connection conn = DriverManager.getConnection(info.getProperty("connectionString"),
                         info.getProperty("user"),
@@ -471,18 +460,13 @@ public class Repository {
         //test.changeLoanTimebyMonth(3,24);
         //test.updateBalanceForAccount(5,10);
         //test.addNewAccount("12345678",1);
-        /*
         for (AccountHistory a : test.getAccountHistory("2016-01-01", "2020-02-05")) {
             System.out.println(a.getId());
             System.out.println(a.getDate());
-        */
-        //System.out.println(test.verifyAdminPin("Lle","Pelle"));
-        //System.out.println(test.getCurrCustomer("890206").getFirstName());
-
         }
 
     }
-
+}
 
 
 

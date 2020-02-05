@@ -7,6 +7,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
+import static se.nackademin.admin.view.SwingSetup.createPanel;
 import static se.nackademin.customer.view.SwingSetup.*;
 
 public class UpdateCustomer {
@@ -19,7 +20,7 @@ public class UpdateCustomer {
     private JTextField personalNumber;
     private JTextField pinCode;
     private JLabel errorText;
-    private Customer customer;
+    private JButton backButton;
 
     public UpdateCustomer(PanelHandler panelHandler) {
 
@@ -37,8 +38,9 @@ public class UpdateCustomer {
         JPanel createCustomerCenterPanel = SwingSetup.createPanel();
         updateButton = createButton("Uppdatera kund");
         eraseButton = createButton("Radera kund");
+        backButton = createButton("Tillbaka");
 
-        createCustomerCenterPanel.setLayout(new GridLayout(5, 2, 20, 20));
+        createCustomerCenterPanel.setLayout(new GridLayout(6, 2, 20, 20));
         createCustomerCenterPanel.add(createLabel("Förnamn", 2));
         createCustomerCenterPanel.add(createLabel("Efternamn", 2));
         createCustomerCenterPanel.add(firstName);
@@ -49,7 +51,8 @@ public class UpdateCustomer {
         createCustomerCenterPanel.add(pinCode);
         createCustomerCenterPanel.add(eraseButton);
         createCustomerCenterPanel.add(updateButton);
-        createCustomerCenterPanel.setBorder(new EmptyBorder(10, 180, 210, 180));
+        createCustomerCenterPanel.add(backButton);
+        createCustomerCenterPanel.setBorder(new EmptyBorder(40, 180, 120, 180));
 
         JPanel createCustomerPanel = createPanel();
         createCustomerPanel.setLayout(new BorderLayout());
@@ -63,13 +66,18 @@ public class UpdateCustomer {
     }
 
     public void addListener(ActionListener listener) {
-        updateButton.addActionListener(listener);
-        eraseButton.addActionListener(listener);
+        this.updateButton.addActionListener(listener);
+        this.eraseButton.addActionListener(listener);
     }
 
     public JLabel getErrorText() {
         return errorText;
     }
+
+    public void addBackButtonListener(ActionListener listener) {
+        backButton.addActionListener(listener);
+    }
+
 
     public void setErrorText(JLabel errorText) {
         this.errorText = errorText;
@@ -105,6 +113,30 @@ public class UpdateCustomer {
 
     public void setPinCode(JTextField pinCode) {
         this.pinCode = pinCode;
+    }
+
+    public JButton getUpdateButton() {
+        return updateButton;
+    }
+
+    public void setUpdateButton(JButton updateButton) {
+        this.updateButton = updateButton;
+    }
+
+    public JButton getBackButton() {
+        return backButton;
+    }
+
+    public void setBackButton(JButton backButton) {
+        this.backButton = backButton;
+    }
+
+    public JButton getEraseButton() {
+        return eraseButton;
+    }
+
+    public void setEraseButton(JButton eraseButton) {
+        this.eraseButton = eraseButton;
     }
 }
 
