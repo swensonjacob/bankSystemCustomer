@@ -1,11 +1,8 @@
 package se.nackademin.admin.view;
 
-import se.nackademin.customer.view.MainMenuView;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.util.List;
 
 public class PanelHandler extends JFrame{
 
@@ -16,6 +13,7 @@ public class PanelHandler extends JFrame{
     private JPanel accountPanel;
     private JPanel loginPanel;
     private JPanel searchPanel;
+    private JPanel createAccountPanel;
 
     private SearchPanel searchView;
     private CustomerView customerView;
@@ -26,6 +24,7 @@ public class PanelHandler extends JFrame{
     private LoginView loginView;
     private CreateCustomer createCustomerView;
     private UpdateCustomer updateCustomerView;
+    private CreateAccountView createAccountView;
 
     public PanelHandler() {
 
@@ -34,11 +33,14 @@ public class PanelHandler extends JFrame{
         updateCustomerView = new UpdateCustomer(this);
         cardLayout = new CardLayout();
         mainPanel = new JPanel(cardLayout);
+
+        AccountInfo info = new AccountInfo(this, null);
+        LoanInfo loan = new LoanInfo(this, null);
+        mainPanel.add(accountPanel, "account");
+
         mainPanel.add(updateCustomerPanel,"updateCustomer");
         mainPanel.add(createCustomerPanel,"createCustomer");
         mainPanel.add(loginPanel,"login");
-
-
 
         add(mainPanel);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -191,5 +193,22 @@ public class PanelHandler extends JFrame{
 
     public SearchPanel getSearchView() {
         return this.searchView;
+    }
+
+
+    public JPanel getCreateAccountPanel() {
+        return this.createAccountPanel;
+    }
+
+    public void setCreateAccountPanel(JPanel panel) {
+        this.createAccountPanel = panel;
+    }
+
+    public CreateAccountView getCreateAccountView() {
+        return this.createAccountView;
+    }
+
+    public void setCreateAccountView(CreateAccountView view) {
+        this.createAccountView = view;
     }
 }
