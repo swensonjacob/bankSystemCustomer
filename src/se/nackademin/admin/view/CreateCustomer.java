@@ -7,12 +7,13 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 
 import static se.nackademin.admin.view.SwingSetup.createBackButton;
+import static se.nackademin.admin.view.SwingSetup.createLabel;
 import static se.nackademin.admin.view.SwingSetup.createPanel;
 import static se.nackademin.customer.view.SwingSetup.*;
 
 public class CreateCustomer {
 
-    JButton createButton;
+    private JButton createButton;
 
     PanelHandler panelHandler;
     private JTextField firstName;
@@ -33,6 +34,7 @@ public class CreateCustomer {
 
         JPanel createCustomerCenterPanel = SwingSetup.createPanel();
         createButton = createButton("Skapa kund");
+        backButton = createButton("Tillbaka");
 
         createCustomerCenterPanel.setLayout(new GridLayout(5, 2, 20, 20));
         createCustomerCenterPanel.add(createLabel("Förnamn", 2));
@@ -43,16 +45,10 @@ public class CreateCustomer {
         createCustomerCenterPanel.add(createLabel("Pinkod", 2));
         createCustomerCenterPanel.add(personalNumber);
         createCustomerCenterPanel.add(pinCode);
-        createCustomerCenterPanel.add(createLabel("", 0));
+        createCustomerCenterPanel.add(backButton);
         createCustomerCenterPanel.add(createButton);
-        createCustomerCenterPanel.setBorder(new EmptyBorder(10, 180, 210, 180));
+        createCustomerCenterPanel.setBorder(new EmptyBorder(10, 180, 160, 180));
 
-        backButton = createBackButton();
-        JPanel btnPanel = createPanel();
-        btnPanel.setLayout(new GridLayout(1,1,10,10));
-        btnPanel.add(backButton);
-        btnPanel.setBorder(new EmptyBorder(50, 20, 50, 0));
-        btnPanel.setPreferredSize(new Dimension(80,60));
 
         JPanel createCustomerPanel = createPanel();
         createCustomerPanel.setLayout(new BorderLayout());
@@ -61,13 +57,13 @@ public class CreateCustomer {
         createCustomerPanel.setLayout(new BorderLayout());
         createCustomerPanel.add(createLogo(), BorderLayout.NORTH);
         createCustomerPanel.add(errorText, BorderLayout.CENTER);
-        createCustomerPanel.add(btnPanel, BorderLayout.WEST);
         createCustomerPanel.add(createCustomerCenterPanel, BorderLayout.SOUTH);
 
         panelHandler.setCreateCustomerPanel(createCustomerPanel);
     }
 
     public void addListener(ActionListener listener) {
+        backButton.addActionListener(listener);
         createButton.addActionListener(listener);
     }
 
@@ -115,6 +111,21 @@ public class CreateCustomer {
         backButton.addActionListener(listener);
     }
 
+    public JButton getCreateButton() {
+        return createButton;
+    }
+
+    public void setCreateButton(JButton createButton) {
+        this.createButton = createButton;
+    }
+
+    public JButton getBackButton() {
+        return backButton;
+    }
+
+    public void setBackButton(JButton backButton) {
+        this.backButton = backButton;
+    }
 }
 
 

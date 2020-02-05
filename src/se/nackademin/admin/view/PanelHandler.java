@@ -32,11 +32,11 @@ public class PanelHandler extends JFrame{
         searchView = new SearchPanel(this);
         cardLayout = new CardLayout();
         mainPanel = new JPanel(cardLayout);
-
+        mainPanel.add(loginPanel,"login");
         mainPanel.add(searchPanel, "search");
         mainPanel.add(updateCustomerPanel,"updateCustomer");
         mainPanel.add(createCustomerPanel,"createCustomer");
-        mainPanel.add(loginPanel,"login");
+
 
 
 
@@ -82,19 +82,17 @@ public class PanelHandler extends JFrame{
         changePanel("account");
     }
 
-   public void changeToCustomerView() {
-       this.adminMenuView = new AdminMenu(this);
+   public void changeToAdminMenu(ActionListener listener) {
+       this.adminMenuView = new AdminMenu(this,listener);
        mainPanel.add(adminMenuPanel, "adminMenu");
        changePanel("adminMenu");
+
     }
 
     public void changeToSearchPanel() {
         changePanel("search");
     }
 
-    public void changeToChangeCustomerPanel() {
-        changePanel("createCustomer");
-    }
     public void changeToUpdateCustomerPanel() {
         changePanel("updateCustomer");
     }

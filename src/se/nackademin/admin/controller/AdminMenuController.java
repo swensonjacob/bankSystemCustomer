@@ -9,6 +9,7 @@ public class AdminMenuController {
 
     public AdminMenuController(Controller controller) {
         this.controller = controller;
+
     }
 
     class LoanButtonListener implements ActionListener {
@@ -31,8 +32,26 @@ public class AdminMenuController {
     class LoanInfoListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            controller.getPanelHandler().changeToCustomerView();
+            //controller.getPanelHandler().changeToAdminMenu();
         }
+    }
+
+    class menuButtonListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+            if (e.getSource() == controller.getPanelHandler().getAdminMenuView().getManageCustomer()) {
+                controller.getPanelHandler().changeToUpdateCustomerPanel();
+
+            } else if(e.getSource() == controller.getPanelHandler().getAdminMenuView().getBackButton()) {
+                controller.getPanelHandler().changeToSearchPanel();
+            }
+
+        }
+    }
+    public ActionListener getNewMenuButtonListener() {
+        return new menuButtonListener();
     }
 
 }

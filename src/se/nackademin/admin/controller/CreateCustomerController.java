@@ -11,7 +11,7 @@ public class CreateCustomerController {
         this.controller = controller;
 
         controller.getPanelHandler().getCreateCustomerView().addListener(new CreateCustomerListener());
-        controller.getPanelHandler().getCreateCustomerView().addBackButtonListener(new BackToSearchListener());
+        controller.getPanelHandler().getCreateCustomerView().addListener(new CreateCustomerListener());
     }
 
     class CreateCustomerListener implements ActionListener {
@@ -19,10 +19,14 @@ public class CreateCustomerController {
         @Override
         public void actionPerformed(ActionEvent e) {
 
-            if (!controller.textFieldEmpty()) {
-                controller.getPanelHandler().changeToCustomerView();
-            } else {
-                controller.getPanelHandler().getCreateCustomerView().getErrorText().setText("Samtliga fält måste fyllas i");
+            if (e.getSource()==controller.getPanelHandler().getCreateCustomerView().getCreateButton()) {
+                if (!controller.textFieldEmpty()) {
+                    controller.getPanelHandler().changeToAdminMenu(controller.getAdminMenuController().getNewMenuButtonListener());
+                } else {
+                    controller.getPanelHandler().getCreateCustomerView().getErrorText().setText("Samtliga fält måste fyllas i");
+                }
+            } else if (e.getSource()==controller.getPanelHandler().getCreateCustomerView().getBackButton()) {
+                controller.getPanelHandler().changeToSearchPanel();
             }
 
         }
@@ -32,7 +36,9 @@ public class CreateCustomerController {
 
             @Override
             public void actionPerformed(ActionEvent e) {
+                System.out.println("klick");
                 controller.getPanelHandler().changeToSearchPanel();
+
 
             }
         }

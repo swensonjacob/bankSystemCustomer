@@ -28,11 +28,12 @@ public class AdminMenu {
     private JButton viewAccount;
     private JButton createAccount;
     private JButton manageCustomer;
-    private JButton logOut;
+    private JButton backButton;
+
 
     private Dimension buttonBounds = new Dimension(50,65);
 
-    public AdminMenu(PanelHandler panelHandler) {
+    public AdminMenu(PanelHandler panelHandler, ActionListener adminMenuListener) {
 
         this.panelHandler = panelHandler;
         loanButtons = new ArrayList<>();
@@ -74,8 +75,10 @@ public class AdminMenu {
         manageCustomer = SwingSetup.createButton("Hantera kund");
         actionButtons.add(manageCustomer);
 
-        logOut = SwingSetup.createButton("Logga ut");
-        actionButtons.add(logOut);
+        backButton = SwingSetup.createButton("Tillbaka");
+        actionButtons.add(backButton);
+
+        addMainmenuButtonListener(adminMenuListener);
 
         actionMenu.add(createLogo(),BorderLayout.NORTH);
         actionMenu.add(overviewPanel,BorderLayout.CENTER);
@@ -117,7 +120,7 @@ public class AdminMenu {
         viewAccount.addActionListener(adminMenuListener);
         createAccount.addActionListener(adminMenuListener);
         manageCustomer.addActionListener(adminMenuListener);
-        logOut.addActionListener(adminMenuListener);
+        backButton.addActionListener(adminMenuListener);
     }
 
     public void setUserLabel(String text) {
@@ -126,5 +129,37 @@ public class AdminMenu {
 
     public JLabel getUserLabel() {
         return userLabel;
+    }
+
+    public JButton getViewAccount() {
+        return viewAccount;
+    }
+
+    public void setViewAccount(JButton viewAccount) {
+        this.viewAccount = viewAccount;
+    }
+
+    public JButton getCreateAccount() {
+        return createAccount;
+    }
+
+    public void setCreateAccount(JButton createAccount) {
+        this.createAccount = createAccount;
+    }
+
+    public JButton getManageCustomer() {
+        return manageCustomer;
+    }
+
+    public void setManageCustomer(JButton manageCustomer) {
+        this.manageCustomer = manageCustomer;
+    }
+
+    public JButton getBackButton() {
+        return backButton;
+    }
+
+    public void setLogOut(JButton logOut) {
+        this.backButton = logOut;
     }
 }

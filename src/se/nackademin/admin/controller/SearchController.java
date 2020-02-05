@@ -16,7 +16,7 @@ public class SearchController {
     class SearchListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            controller.getPanelHandler().changeToCustomerView();
+            controller.getPanelHandler().changeToAdminMenu(controller.getAdminMenuController().getNewMenuButtonListener());
         }
     }
 
