@@ -14,6 +14,7 @@ public class PanelHandler extends JFrame{
     private JPanel loginPanel;
     private JPanel searchPanel;
     private JPanel createAccountPanel;
+    private JPanel createLoanPanel;
 
     private SearchPanel searchView;
     private AdminMenu adminMenuView;
@@ -22,6 +23,7 @@ public class PanelHandler extends JFrame{
     private LoanInfo loanInfo;
     private AccountInfo accountInfo;
     private LoginView loginView;
+    private CreateLoanView createLoanView;
     private CreateCustomer createCustomerView;
     private UpdateCustomer updateCustomerView;
     private CreateAccountView createAccountView;
@@ -36,12 +38,12 @@ public class PanelHandler extends JFrame{
 
         cardLayout = new CardLayout();
         mainPanel = new JPanel(cardLayout);
+
         mainPanel.add(loginPanel,"login");
         mainPanel.add(searchPanel, "search");
         mainPanel.add(updateCustomerPanel,"updateCustomer");
         mainPanel.add(createCustomerPanel,"createCustomer");
         mainPanel.add(createAccountPanel,"createAccount");
-
 
         add(mainPanel);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -91,6 +93,8 @@ public class PanelHandler extends JFrame{
        changePanel("adminMenu");
 
     }
+
+
 
     public void changeToCreateAccountPanel() {
         changePanel("createAccount");
@@ -217,4 +221,20 @@ public class PanelHandler extends JFrame{
         this.createAccountView = view;
     }
 
+
+    public JPanel getCreateLoanPanel() {
+        return this.createLoanPanel;
+    }
+
+    public void setCreateLoanPanel(JPanel panel) {
+        this.createLoanPanel = panel;
+    }
+
+    public CreateLoanView getCreateLoanView() {
+        return this.createLoanView;
+    }
+
+    public void setLoanView(CreateLoanView view) {
+        this.createLoanView = view;
+    }
 }

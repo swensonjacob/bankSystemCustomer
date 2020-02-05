@@ -3,10 +3,6 @@ package se.nackademin.admin.controller;
 import se.nackademin.admin.model.Customer;
 import se.nackademin.admin.repository.Repository;
 import se.nackademin.admin.view.PanelHandler;
-import se.nackademin.admin.view.UpdateCustomer;
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class Controller {
 
@@ -31,15 +27,13 @@ public class Controller {
         createCustomerController = new CreateCustomerController(this);
         loanInfoController = new LoanInfoController(this);
         loginViewController = new LoginViewController(this);
-        searchController = new SearchController(this);
+        searchController =new SearchController(this);
         updateCustomer = new UpdateCustomerController(this);
 
     }
-
-    private boolean personalNumberExists(String personalNr) {
-        return repository.verifyPersonalNumber(personalNr);
-    }
-
+        private boolean personalNumberExists(String personalNr) {
+            return repository.verifyPersonalNumber(personalNr);
+        }
 
     public PanelHandler getPanelHandler() {
         return panelHandler;

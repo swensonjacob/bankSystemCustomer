@@ -52,6 +52,7 @@ public class AdminMenuController {
 
         }
     }
+
     public ActionListener getNewMenuButtonListener() {
         return new menuButtonListener();
     }
