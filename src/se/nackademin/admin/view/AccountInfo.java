@@ -20,6 +20,7 @@ public class AccountInfo {
     public AccountInfo(PanelHandler panelHandler, ActionListener listener) {
 
         this.panelHandler = panelHandler;
+
         accountTransactions = new DefaultListModel();
         backButton = createBackButton();
 
@@ -34,20 +35,42 @@ public class AccountInfo {
         btnPanel.setPreferredSize(new Dimension(80,60));
 
         JPanel withdrawPanel = createPanel();
-        withdrawPanel.setLayout(new GridLayout(2,2,10,10));
+        withdrawPanel.setLayout(new GridLayout(3, 1, 10, 5)); // 3 från 2 50 från 10
+
+        JPanel buttons = createPanel();
+        buttons.setLayout(new GridLayout(1, 3, 10, 10));
+
         JTextField withdrawSum = createTextField();
-        JButton withdrawButton = createButton("Ta ut pengar");
+        JButton withdrawButton = createButton("Ta ut");
+        JButton depositButton = createButton("Sätt in");
+
+        buttons.add(withdrawSum);
+        buttons.add(withdrawButton);
+        buttons.add(depositButton);
+
+        JPanel mounthInputs = createPanel();
+        mounthInputs.setLayout(new GridLayout(1, 3, 10, 10));
+
+        JTextField startMounth = createTextField();
+        JTextField stopMounth = createTextField();
+        JButton showHistory = createButton("Visa");
+
+        mounthInputs.add(startMounth);
+        mounthInputs.add(stopMounth);
+        mounthInputs.add(showHistory);
+
         withdrawPanel.add(createLabel("Ange belopp",2));
-        withdrawPanel.add(new JLabel());
-        withdrawPanel.add(withdrawSum);
-        withdrawPanel.add(withdrawButton);
-        withdrawPanel.setBorder(new EmptyBorder(10,0,10,0));
+        withdrawPanel.add(buttons);
+
+        withdrawPanel.add(createLabel("ange datum för historia", 2));
+        withdrawPanel.add(mounthInputs);
+
+        withdrawPanel.setBorder(new EmptyBorder(0,10,0,10));
 
         JPanel accountInfoPanel = createPanel();
         accountInfoPanel.setLayout(new GridLayout(4,1));
         accountInfoPanel.add(createBigLabel("Konto 213123123123123",2));
         accountInfoPanel.add(createLabel("Saldo: 100 000" ,2));
-        accountInfoPanel.add(createLabel("Uttag",2));
         accountInfoPanel.add(withdrawPanel);
         accountInfoPanel.setBorder(new EmptyBorder(0,50,0,50));
 
@@ -62,16 +85,12 @@ public class AccountInfo {
         accountPanel.add(accountInfoPanel,BorderLayout.CENTER);
         accountPanel.add(btnPanel,BorderLayout.WEST);
         accountPanel.add(paymentList,BorderLayout.SOUTH);
-        panelHandler.setAccountPanel(accountPanel);
 
+        panelHandler.setAccountPanel(accountPanel);
     }
 
     public void showTransactionHistory () {
         accountTransactions.addElement("Kontohistorik:");
         accountTransactions.addElement("2019-02-01, Uttag -1 000, Saldo: 15 000");
         }
-
-
-
     }
-

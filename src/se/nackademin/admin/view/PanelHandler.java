@@ -13,6 +13,7 @@ public class PanelHandler extends JFrame{
     private JPanel accountPanel;
     private JPanel loginPanel;
     private JPanel searchPanel;
+    private JPanel createAccountPanel;
 
     private SearchPanel searchView;
     private AdminMenu adminMenuView;
@@ -23,6 +24,7 @@ public class PanelHandler extends JFrame{
     private LoginView loginView;
     private CreateCustomer createCustomerView;
     private UpdateCustomer updateCustomerView;
+    private CreateAccountView createAccountView;
 
     public PanelHandler() {
 
@@ -34,10 +36,13 @@ public class PanelHandler extends JFrame{
         mainPanel = new JPanel(cardLayout);
         mainPanel.add(loginPanel,"login");
         mainPanel.add(searchPanel, "search");
+
+        AccountInfo info = new AccountInfo(this, null);
+        LoanInfo loan = new LoanInfo(this, null);
+        mainPanel.add(accountPanel, "account");
+
         mainPanel.add(updateCustomerPanel,"updateCustomer");
         mainPanel.add(createCustomerPanel,"createCustomer");
-
-
 
 
         add(mainPanel);
@@ -191,6 +196,23 @@ public class PanelHandler extends JFrame{
 
     public SearchPanel getSearchView() {
         return this.searchView;
+    }
+
+
+    public JPanel getCreateAccountPanel() {
+        return this.createAccountPanel;
+    }
+
+    public void setCreateAccountPanel(JPanel panel) {
+        this.createAccountPanel = panel;
+    }
+
+    public CreateAccountView getCreateAccountView() {
+        return this.createAccountView;
+    }
+
+    public void setCreateAccountView(CreateAccountView view) {
+        this.createAccountView = view;
     }
 
 }
