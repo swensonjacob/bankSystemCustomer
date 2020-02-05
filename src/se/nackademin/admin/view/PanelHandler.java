@@ -13,6 +13,7 @@ public class PanelHandler extends JFrame{
     private JPanel accountPanel;
     private JPanel loginPanel;
     private JPanel searchPanel;
+    private JPanel createAccountPanel;
 
     private SearchPanel searchView;
     private AdminMenu adminMenuView;
@@ -23,6 +24,7 @@ public class PanelHandler extends JFrame{
     private LoginView loginView;
     private CreateCustomer createCustomerView;
     private UpdateCustomer updateCustomerView;
+    private CreateAccountView createAccountView;
 
     public PanelHandler() {
 
@@ -30,14 +32,15 @@ public class PanelHandler extends JFrame{
         createCustomerView = new CreateCustomer(this);
         updateCustomerView = new UpdateCustomer(this);
         searchView = new SearchPanel(this);
+        createAccountView = new CreateAccountView(this);
+
         cardLayout = new CardLayout();
         mainPanel = new JPanel(cardLayout);
         mainPanel.add(loginPanel,"login");
         mainPanel.add(searchPanel, "search");
         mainPanel.add(updateCustomerPanel,"updateCustomer");
         mainPanel.add(createCustomerPanel,"createCustomer");
-
-
+        mainPanel.add(createAccountPanel,"createAccount");
 
 
         add(mainPanel);
@@ -89,7 +92,9 @@ public class PanelHandler extends JFrame{
 
     }
 
-
+    public void changeToCreateAccountPanel() {
+        changePanel("createAccount");
+    }
 
     public void changeToSearchPanel() {
         changePanel("search");
@@ -151,8 +156,8 @@ public class PanelHandler extends JFrame{
         this.searchPanel = searchPanel;
     }
 
-    public SearchPanel getSearchPanel() {
-        return this.searchView;
+    public JPanel getSearchPanel() {
+        return this.searchPanel;
     }
 
     public JPanel getCreateCustomerPanel() {
@@ -193,6 +198,23 @@ public class PanelHandler extends JFrame{
 
     public SearchPanel getSearchView() {
         return this.searchView;
+    }
+
+
+    public JPanel getCreateAccountPanel() {
+        return this.createAccountPanel;
+    }
+
+    public void setCreateAccountPanel(JPanel panel) {
+        this.createAccountPanel = panel;
+    }
+
+    public CreateAccountView getCreateAccountView() {
+        return this.createAccountView;
+    }
+
+    public void setCreateAccountView(CreateAccountView view) {
+        this.createAccountView = view;
     }
 
 }

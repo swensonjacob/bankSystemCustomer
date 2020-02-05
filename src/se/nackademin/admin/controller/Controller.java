@@ -49,17 +49,6 @@ public class Controller {
         }
         }
 
-        public boolean textFieldEmpty() {
-        if (panelHandler.getCreateCustomerView().getFirstName().getText().equals("") ||
-                panelHandler.getCreateCustomerView().getLastName().getText().equals("") ||
-                panelHandler.getCreateCustomerView().getPersonalNumber().getText().equals("") ||
-                panelHandler.getCreateCustomerView().getPinCode().getText().equals("")) {
-            return true;
-        } else {
-            return false;
-        }
-        }
-
     public PanelHandler getPanelHandler() {
         return panelHandler;
     }

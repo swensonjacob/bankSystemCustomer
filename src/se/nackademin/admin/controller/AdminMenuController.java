@@ -46,6 +46,8 @@ public class AdminMenuController {
 
             } else if(e.getSource() == controller.getPanelHandler().getAdminMenuView().getBackButton()) {
                 controller.getPanelHandler().changeToSearchPanel();
+            } else if (e.getSource() == controller.getPanelHandler().getAdminMenuView().getCreateAccount()) {
+                controller.getPanelHandler().changeToCreateAccountPanel();
             }
 
         }
