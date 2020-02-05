@@ -14,6 +14,7 @@ import static se.nackademin.customer.view.SwingSetup.*;
 
 public class MainMenuView {
 
+
     private PanelHandler panelHandler;
     private JPanel mainMenu;
     private JLabel userLabel;
@@ -76,13 +77,17 @@ public class MainMenuView {
     }
 
     public void createLoanButtons() {
-      for(Loan loan:loans) {
-          loanButtons.add(createTwoLineButton(loan.getLoanNumber(),loan.getAmount(),1));
-      }
+        for(Loan loan:loans) {
+            JButton button = createTwoLineButton(loan.getLoanNumber(),loan.getAmount(),1);
+            button.setName(Integer.toString(loan.getId()));
+            loanButtons.add(button);
+        }
     }
     public void createAccountButtons() {
         for(Account account:accounts) {
-            accountButtons.add(createTwoLineButton(account.getAccountName(),account.getBalance(),0));
+            JButton button = createTwoLineButton(account.getAccountName(),account.getBalance(),0);
+            button.setName(Integer.toString(account.getId()));
+            accountButtons.add(button);
         }
     }
 

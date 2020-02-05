@@ -57,23 +57,23 @@ public class PanelHandler extends JFrame{
         cardLayout.show(mainPanel, panelName);
     }
 
-    public void changeToLoanPanel(ActionListener listener) {
-        loanInfo = new LoanInfo(this, listener);
+    public void changeToLoanPanel(ActionListener listener, Loan loan) {
+        loanInfo = new LoanInfo(this, listener, loan);
         mainPanel.add(loanPanel, "loan");
         changePanel("loan");
     }
 
-    public void changeToAccountPanel(ActionListener listener) {
-        this.accountInfo = new AccountInfo(this, listener);
+    public void changeToAccountPanel(ActionListener backListener, ActionListener withdrawListener, Account account) {
+        this.accountInfo = new AccountInfo(this, backListener, withdrawListener, account);
         mainPanel.add(accountPanel, "account");
         changePanel("account");
     }
 
-   public void changeToMainMenu(ActionListener accountlistener,
-                                ActionListener loanListener, List<Loan> loans, List<Account> accounts) {
-       this.mainMenuView = new MainMenuView(this, accountlistener, loanListener,loans,accounts);
-       mainPanel.add(mainMenu, "mainMenu");
-       changePanel("mainMenu");
+    public void changeToMainMenu(ActionListener accountlistener,
+                                 ActionListener loanListener, List<Loan> loans, List<Account> accounts) {
+        this.mainMenuView = new MainMenuView(this, accountlistener, loanListener,loans,accounts);
+        mainPanel.add(mainMenu, "mainMenu");
+        changePanel("mainMenu");
     }
 
     public MainMenuView getMainMenuView() {
