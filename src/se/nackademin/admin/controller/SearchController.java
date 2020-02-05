@@ -19,7 +19,7 @@ public class SearchController {
             String personalNR = controller.getPanelHandler().getSearchView().getSearchField();
 
             if (controller.getRepository().verifyPersonalNumber(personalNR)) {
-               controller.setCurrentCustomer(controller.getRepository().getCurrCustomer(personalNR));
+                controller.setCurrentCustomer(controller.getRepository().getCurrCustomer(personalNR));
                 controller.getPanelHandler().changeToAdminMenu(controller.getAdminMenuController().getNewMenuButtonListener());
             } else {
                 controller.getPanelHandler().getSearchView().getErrorText().setText("Felaktigt personnummer");
@@ -27,12 +27,10 @@ public class SearchController {
         }
     }
 
-
     class newCustomerListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             controller.getPanelHandler().changeToCreateCustomerPanel();
         }
     }
-
 }

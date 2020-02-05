@@ -19,37 +19,17 @@ public class LoginViewController {
         @Override
         public void actionPerformed(ActionEvent e) {
 
-            //Utkommenterad av marcus för testsyften
-                /*
-                String passwordString = new String (panelHandler.getLoginView().getPassword().getPassword());
-                String usernameInput = panelHandler.getLoginView().getUsername().getText();
-                if (personalNumberExists(usernameInput)) {
-                    if (passwordCorrect(usernameInput, passwordString)) {
-                        changeToMainMenu();
-                        panelHandler.getMainMenuView().getUserLabel().setText("Inloggad som: " +
-                                currentCustomer.getFirstName() + " " + currentCustomer.getLastName());
-                    } else {
-                        panelHandler.getLoginView().getErrorText().setText("Felaktig pinkod");
-                        panelHandler.getLoginView().getPassword().setText("");
-                    }
-                } else {
-                    panelHandler.getLoginView().getErrorText().setText("Felaktigt personnummer");
-                   panelHandler.getLoginView().getUsername().setText("");
-                    panelHandler.getLoginView().getPassword().setText("");
-                }
-                */
 
-
-                String username = controller.getPanelHandler().getLoginView().getUsername().getText();
-                String password = new String (controller.getPanelHandler().getLoginView().getPassword().getPassword());
+            String username = controller.getPanelHandler().getLoginView().getUsername().getText();
+            String password = new String (controller.getPanelHandler().getLoginView().getPassword().getPassword());
             System.out.println(username);
             System.out.println(password);
 
-//            if (controller.getRepository().XXXXXXXXXX(username, password)) {
-//                controller.getPanelHandler().changeToSearchPanel();
-//            } else {
-//                controller.getPanelHandler().getLoginView().getErrorText().setText("Felaktig inloggning");
-//            }
+            if (controller.getRepository().verifyAdminPin(username, password)) {
+                controller.getPanelHandler().changeToSearchPanel();
+            } else {
+                controller.getPanelHandler().getLoginView().getErrorText().setText("Felaktig inloggning");
+            }
         }
     }
 }
