@@ -31,23 +31,15 @@ public class Controller {
         createCustomerController = new CreateCustomerController(this);
         loanInfoController = new LoanInfoController(this);
         loginViewController = new LoginViewController(this);
-        searchController =new SearchController(this);
+        searchController = new SearchController(this);
         updateCustomer = new UpdateCustomerController(this);
 
     }
-        private boolean personalNumberExists(String personalNr) {
-            return repository.verifyPersonalNumber(personalNr);
-        }
 
-        private boolean passwordCorrect(String username, String password) {
-        Customer customer = repository.verifyPin(username,password);
-        if (customer!= null) {
-            currentCustomer = customer;
-            return true;
-        } else {
-            return false;
-        }
-        }
+    private boolean personalNumberExists(String personalNr) {
+        return repository.verifyPersonalNumber(personalNr);
+    }
+
 
     public PanelHandler getPanelHandler() {
         return panelHandler;

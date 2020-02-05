@@ -460,13 +460,12 @@ public class Repository {
         //test.changeLoanTimebyMonth(3,24);
         //test.updateBalanceForAccount(5,10);
         //test.addNewAccount("12345678",1);
-        for (AccountHistory a : test.getAccountHistory("2016-01-01", "2020-02-05")) {
-            System.out.println(a.getId());
-            System.out.println(a.getDate());
+        //for (AccountHistory a : test.getAccountHistory("2016-01-01", "2020-02-05")) {
+        //   System.out.println(a.getId());
+        //   System.out.println(a.getDate());
         }
 
     }
-}
 
 
 
