@@ -20,7 +20,7 @@ public class CreateCustomerController {
         public void actionPerformed(ActionEvent e) {
 
             if (e.getSource()==controller.getPanelHandler().getCreateCustomerView().getCreateButton()) {
-                if (!controller.textFieldEmpty()) {
+                if (!textFieldEmpty()) {
                     controller.getPanelHandler().changeToAdminMenu(controller.getAdminMenuController().getNewMenuButtonListener());
                 } else {
                     controller.getPanelHandler().getCreateCustomerView().getErrorText().setText("Samtliga fält måste fyllas i");
@@ -42,4 +42,15 @@ public class CreateCustomerController {
 
             }
         }
+
+    public boolean textFieldEmpty() {
+        if (controller.getPanelHandler().getCreateCustomerView().getFirstName().getText().equals("") ||
+                controller.getPanelHandler().getCreateCustomerView().getLastName().getText().equals("") ||
+                controller.getPanelHandler().getCreateCustomerView().getPersonalNumber().getText().equals("") ||
+                controller.getPanelHandler().getCreateCustomerView().getPinCode().getText().equals("")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
     }

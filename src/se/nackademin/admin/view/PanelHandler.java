@@ -32,12 +32,15 @@ public class PanelHandler extends JFrame{
         createCustomerView = new CreateCustomer(this);
         updateCustomerView = new UpdateCustomer(this);
         searchView = new SearchPanel(this);
+        createAccountView = new CreateAccountView(this);
+
         cardLayout = new CardLayout();
         mainPanel = new JPanel(cardLayout);
         mainPanel.add(loginPanel,"login");
         mainPanel.add(searchPanel, "search");
         mainPanel.add(updateCustomerPanel,"updateCustomer");
         mainPanel.add(createCustomerPanel,"createCustomer");
+        mainPanel.add(createAccountPanel,"createAccount");
 
         add(mainPanel);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -86,6 +89,10 @@ public class PanelHandler extends JFrame{
        mainPanel.add(adminMenuPanel, "adminMenu");
        changePanel("adminMenu");
 
+    }
+
+    public void changeToCreateAccountPanel() {
+        changePanel("createAccount");
     }
 
     public void changeToSearchPanel() {

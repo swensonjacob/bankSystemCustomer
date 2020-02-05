@@ -7,6 +7,7 @@ public class LoginViewController {
 
     private Controller controller;
 
+
     public LoginViewController(Controller controller) {
         this.controller = controller;
 
@@ -38,7 +39,17 @@ public class LoginViewController {
                 }
                 */
 
-            controller.getPanelHandler().changeToSearchPanel();
+
+                String username = controller.getPanelHandler().getLoginView().getUsername().getText();
+                String password = new String (controller.getPanelHandler().getLoginView().getPassword().getPassword());
+            System.out.println(username);
+            System.out.println(password);
+
+//            if (controller.getRepository().XXXXXXXXXX(username, password)) {
+//                controller.getPanelHandler().changeToSearchPanel();
+//            } else {
+//                controller.getPanelHandler().getLoginView().getErrorText().setText("Felaktig inloggning");
+//            }
         }
     }
 }
