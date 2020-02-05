@@ -31,7 +31,6 @@ public class SearchPanel {
         JPanel loginCenterPanel = SwingSetup.createPanel();
         searchPanel.add(loginCenterPanel, BorderLayout.SOUTH);
         loginCenterPanel.setLayout(new GridLayout(2, 2,20,20));
-        loginCenterPanel.setLayout(new GridLayout(5, 1));
         loginCenterPanel.setBorder(new EmptyBorder(10, 180, 210, 180));
 
         loginCenterPanel.add(createBigLabel("Sök kund:", 0));
