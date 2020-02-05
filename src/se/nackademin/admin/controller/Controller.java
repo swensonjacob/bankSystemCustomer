@@ -17,98 +17,15 @@ public class Controller {
 
         panelHandler = new PanelHandler();
         repository = new Repository();
-        panelHandler.getLoginView().addLoginListener(new LoginListener());
-        panelHandler.getCreateCustomerView().addListener(new CreateCustomerListener());
-        panelHandler.getUpdateCustomerView().addListener(new UpdateCustomerListener());
+        new AccountInfoController(this);
+        new AdminMenuController(this);
+        new CreateCustomerController(this);
+        new LoanInfoController(this);
+        new LoginViewController(this);
+        new SearchController(this);
+        new UpdateCustomerController(this);
 
     }
-
-    class CreateCustomerListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-
-            if (!textFieldEmpty()) {
-                //repo create customer
-            } else {
-                panelHandler.getCreateCustomerView().getErrorText().setText("Samtliga fält måste fyllas i");
-            }
-
-        }
-    }
-    class UpdateCustomerListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-
-            if (!textFieldEmpty()) {
-                //repo update customer
-            } else {
-                panelHandler.getCreateCustomerView().getErrorText().setText("Samtliga fält måste fyllas i");
-            }
-
-        }
-    }
-
-        class LoanButtonListener implements ActionListener {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                panelHandler.changeToLoanPanel(new LoanInfoListener());
-            }
-        }
-
-    class AccountButtonListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            panelHandler.changeToAccountPanel(new LoanInfoListener());
-        }
-    }
-
-        class LoanInfoListener implements ActionListener {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                panelHandler.changeToCustomerView();
-            }
-        }
-
-        class LoginListener implements ActionListener {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                //Utkommenterad av marcus för testsyften
-                /*
-                String passwordString = new String (panelHandler.getLoginView().getPassword().getPassword());
-                String usernameInput = panelHandler.getLoginView().getUsername().getText();
-                if (personalNumberExists(usernameInput)) {
-                    if (passwordCorrect(usernameInput, passwordString)) {
-                        changeToMainMenu();
-                        panelHandler.getMainMenuView().getUserLabel().setText("Inloggad som: " +
-                                currentCustomer.getFirstName() + " " + currentCustomer.getLastName());
-                    } else {
-                        panelHandler.getLoginView().getErrorText().setText("Felaktig pinkod");
-                        panelHandler.getLoginView().getPassword().setText("");
-                    }
-                } else {
-                    panelHandler.getLoginView().getErrorText().setText("Felaktigt personnummer");
-                   panelHandler.getLoginView().getUsername().setText("");
-                    panelHandler.getLoginView().getPassword().setText("");
-                }
-                */
-
-                panelHandler.changeToSearchPanel(new SearchListener());
-            }
-        }
-
-        class SearchListener implements ActionListener {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                panelHandler.changeToCustomerView();
-            }
-        }
-
         private boolean personalNumberExists(String personalNr) {
             return repository.verifyPersonalNumber(personalNr);
         }
@@ -123,7 +40,7 @@ public class Controller {
         }
         }
 
-        private boolean textFieldEmpty() {
+        public boolean textFieldEmpty() {
         if (panelHandler.getCreateCustomerView().getFirstName().getText().equals("") ||
                 panelHandler.getCreateCustomerView().getLastName().getText().equals("") ||
                 panelHandler.getCreateCustomerView().getPersonalNumber().getText().equals("") ||
@@ -134,4 +51,27 @@ public class Controller {
         }
         }
 
+    public PanelHandler getPanelHandler() {
+        return panelHandler;
     }
+
+    public void setPanelHandler(PanelHandler panelHandler) {
+        this.panelHandler = panelHandler;
+    }
+
+    public Repository getRepository() {
+        return repository;
+    }
+
+    public void setRepository(Repository repository) {
+        this.repository = repository;
+    }
+
+    public Customer getCurrentCustomer() {
+        return currentCustomer;
+    }
+
+    public void setCurrentCustomer(Customer currentCustomer) {
+        this.currentCustomer = currentCustomer;
+    }
+}

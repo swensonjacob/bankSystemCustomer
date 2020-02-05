@@ -1,24 +1,21 @@
 package se.nackademin.admin.view;
 
-import se.nackademin.customer.view.MainMenuView;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.util.List;
 
 public class PanelHandler extends JFrame{
 
     private CardLayout cardLayout;
     private JPanel mainPanel;
-    private JPanel customerPanel;
+    private JPanel adminMenuPanel;
     private JPanel loanPanel;
     private JPanel accountPanel;
     private JPanel loginPanel;
     private JPanel searchPanel;
 
     private SearchPanel searchView;
-    private CustomerView customerView;
+    private AdminMenu adminMenuView;
     private JPanel createCustomerPanel;
     private JPanel updateCustomerPanel;
     private LoanInfo loanInfo;
@@ -32,8 +29,11 @@ public class PanelHandler extends JFrame{
         loginView = new LoginView(this);
         createCustomerView = new CreateCustomer(this);
         updateCustomerView = new UpdateCustomer(this);
+        searchView = new SearchPanel(this);
         cardLayout = new CardLayout();
         mainPanel = new JPanel(cardLayout);
+
+        mainPanel.add(searchPanel, "search");
         mainPanel.add(updateCustomerPanel,"updateCustomer");
         mainPanel.add(createCustomerPanel,"createCustomer");
         mainPanel.add(loginPanel,"login");
@@ -47,12 +47,12 @@ public class PanelHandler extends JFrame{
         setSize(new Dimension(800, 600));
     }
 
-    public JPanel getCustomerPanel() {
-        return this.customerPanel;
+    public JPanel getAdminMenuPanel() {
+        return this.adminMenuPanel;
     }
 
-    public void setCustomerPanel(JPanel customerPanel) {
-        this.customerPanel = customerPanel;
+    public void setAdminMenuPanel(JPanel adminMenuPanel) {
+        this.adminMenuPanel = adminMenuPanel;
     }
 
     public JPanel getLoanPanel() {
@@ -64,6 +64,10 @@ public class PanelHandler extends JFrame{
     }
     private void changePanel(String panelName) {
         cardLayout.show(mainPanel, panelName);
+    }
+
+    public void changeToCreateCustomerPanel() {
+        changePanel("createCustomer");
     }
 
     public void changeToLoanPanel(ActionListener listener) {
@@ -79,14 +83,12 @@ public class PanelHandler extends JFrame{
     }
 
    public void changeToCustomerView() {
-       this.customerView = new CustomerView(this);
-       mainPanel.add(customerPanel, "customerView");
-       changePanel("customerView");
+       this.adminMenuView = new AdminMenu(this);
+       mainPanel.add(adminMenuPanel, "adminMenu");
+       changePanel("adminMenu");
     }
 
-    public void changeToSearchPanel(ActionListener listener) {
-        searchView = new SearchPanel(this, listener);
-        mainPanel.add(searchPanel, "search");
+    public void changeToSearchPanel() {
         changePanel("search");
     }
 
@@ -97,12 +99,12 @@ public class PanelHandler extends JFrame{
         changePanel("updateCustomer");
     }
 
-    public CustomerView getCustomerView() {
-        return this.customerView;
+    public AdminMenu getAdminMenuView() {
+        return this.adminMenuView;
     }
 
-    public void setCustomerView(CustomerView customerView) {
-        this.customerView = customerView;
+    public void setAdminMenuView(AdminMenu adminMenuView) {
+        this.adminMenuView = adminMenuView;
     }
 
     public LoanInfo getLoanInfo() {
@@ -192,4 +194,5 @@ public class PanelHandler extends JFrame{
     public SearchPanel getSearchView() {
         return this.searchView;
     }
+
 }

@@ -116,6 +116,8 @@ public class AdminMenu {
     public void addMainmenuButtonListener(ActionListener adminMenuListener) {
         viewAccount.addActionListener(adminMenuListener);
         createAccount.addActionListener(adminMenuListener);
+        manageCustomer.addActionListener(adminMenuListener);
+        logOut.addActionListener(adminMenuListener);
     }
 
     public void setUserLabel(String text) {
