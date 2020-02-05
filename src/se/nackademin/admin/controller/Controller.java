@@ -3,6 +3,7 @@ package se.nackademin.admin.controller;
 import se.nackademin.admin.model.Customer;
 import se.nackademin.admin.repository.Repository;
 import se.nackademin.admin.view.PanelHandler;
+import se.nackademin.admin.view.UpdateCustomer;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,103 +13,28 @@ public class Controller {
     private PanelHandler panelHandler;
     private Repository repository;
     private Customer currentCustomer;
+    private AccountInfoController accountInfoController;
+    private AdminMenuController adminMenuController;
+    private CreateCustomerController createCustomerController;
+    private LoanInfoController loanInfoController;
+    private LoginViewController loginViewController;
+    private SearchController searchController;
+    private UpdateCustomerController updateCustomer;
+
 
     public Controller() {
 
         panelHandler = new PanelHandler();
         repository = new Repository();
-        panelHandler.getLoginView().addLoginListener(new LoginListener());
-        panelHandler.getCreateCustomerView().addListener(new CreateCustomerListener());
-        panelHandler.getUpdateCustomerView().addListener(new UpdateCustomerListener());
+        accountInfoController = new AccountInfoController(this);
+        adminMenuController = new AdminMenuController(this);
+        createCustomerController = new CreateCustomerController(this);
+        loanInfoController = new LoanInfoController(this);
+        loginViewController = new LoginViewController(this);
+        searchController =new SearchController(this);
+        updateCustomer = new UpdateCustomerController(this);
 
     }
-
-    class CreateCustomerListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-
-            if (!textFieldEmpty()) {
-                //repo create customer
-            } else {
-                panelHandler.getCreateCustomerView().getErrorText().setText("Samtliga fält måste fyllas i");
-            }
-
-        }
-    }
-    class UpdateCustomerListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-
-            if (!textFieldEmpty()) {
-                //repo update customer
-            } else {
-                panelHandler.getCreateCustomerView().getErrorText().setText("Samtliga fält måste fyllas i");
-            }
-
-        }
-    }
-
-        class LoanButtonListener implements ActionListener {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                panelHandler.changeToLoanPanel(new LoanInfoListener());
-            }
-        }
-
-    class AccountButtonListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            panelHandler.changeToAccountPanel(new LoanInfoListener());
-        }
-    }
-
-        class LoanInfoListener implements ActionListener {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                panelHandler.changeToCustomerView();
-            }
-        }
-
-        class LoginListener implements ActionListener {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                //Utkommenterad av marcus för testsyften
-                /*
-                String passwordString = new String (panelHandler.getLoginView().getPassword().getPassword());
-                String usernameInput = panelHandler.getLoginView().getUsername().getText();
-                if (personalNumberExists(usernameInput)) {
-                    if (passwordCorrect(usernameInput, passwordString)) {
-                        changeToMainMenu();
-                        panelHandler.getMainMenuView().getUserLabel().setText("Inloggad som: " +
-                                currentCustomer.getFirstName() + " " + currentCustomer.getLastName());
-                    } else {
-                        panelHandler.getLoginView().getErrorText().setText("Felaktig pinkod");
-                        panelHandler.getLoginView().getPassword().setText("");
-                    }
-                } else {
-                    panelHandler.getLoginView().getErrorText().setText("Felaktigt personnummer");
-                   panelHandler.getLoginView().getUsername().setText("");
-                    panelHandler.getLoginView().getPassword().setText("");
-                }
-                */
-
-                panelHandler.changeToSearchPanel(new SearchListener());
-            }
-        }
-
-        class SearchListener implements ActionListener {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                panelHandler.changeToCustomerView();
-            }
-        }
-
         private boolean personalNumberExists(String personalNr) {
             return repository.verifyPersonalNumber(personalNr);
         }
@@ -123,7 +49,7 @@ public class Controller {
         }
         }
 
-        private boolean textFieldEmpty() {
+        public boolean textFieldEmpty() {
         if (panelHandler.getCreateCustomerView().getFirstName().getText().equals("") ||
                 panelHandler.getCreateCustomerView().getLastName().getText().equals("") ||
                 panelHandler.getCreateCustomerView().getPersonalNumber().getText().equals("") ||
@@ -134,4 +60,83 @@ public class Controller {
         }
         }
 
+    public PanelHandler getPanelHandler() {
+        return panelHandler;
     }
+
+    public void setPanelHandler(PanelHandler panelHandler) {
+        this.panelHandler = panelHandler;
+    }
+
+    public Repository getRepository() {
+        return repository;
+    }
+
+    public void setRepository(Repository repository) {
+        this.repository = repository;
+    }
+
+    public Customer getCurrentCustomer() {
+        return currentCustomer;
+    }
+
+    public void setCurrentCustomer(Customer currentCustomer) {
+        this.currentCustomer = currentCustomer;
+    }
+
+    public AccountInfoController getAccountInfoController() {
+        return accountInfoController;
+    }
+
+    public void setAccountInfoController(AccountInfoController accountInfoController) {
+        this.accountInfoController = accountInfoController;
+    }
+
+    public AdminMenuController getAdminMenuController() {
+        return adminMenuController;
+    }
+
+    public void setAdminMenuController(AdminMenuController adminMenuController) {
+        this.adminMenuController = adminMenuController;
+    }
+
+    public CreateCustomerController getCreateCustomerController() {
+        return createCustomerController;
+    }
+
+    public void setCreateCustomerController(CreateCustomerController createCustomerController) {
+        this.createCustomerController = createCustomerController;
+    }
+
+    public LoanInfoController getLoanInfoController() {
+        return loanInfoController;
+    }
+
+    public void setLoanInfoController(LoanInfoController loanInfoController) {
+        this.loanInfoController = loanInfoController;
+    }
+
+    public LoginViewController getLoginViewController() {
+        return loginViewController;
+    }
+
+    public void setLoginViewController(LoginViewController loginViewController) {
+        this.loginViewController = loginViewController;
+    }
+
+    public SearchController getSearchController() {
+        return searchController;
+    }
+
+    public void setSearchController(SearchController searchController) {
+        this.searchController = searchController;
+    }
+
+    public UpdateCustomerController getUpdateCustomer() {
+        return updateCustomer;
+    }
+
+    public void setUpdateCustomer(UpdateCustomerController updateCustomer) {
+        this.updateCustomer = updateCustomer;
+    }
+}

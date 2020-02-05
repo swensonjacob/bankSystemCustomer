@@ -27,11 +27,12 @@ public class LoanInfo {
         this.panelHandler = panelHandler;
 
         loanPayments = new DefaultListModel();
-        backButton = createBackButton();
+
 
         //calculateDownPaymentPlan(10000,24,2.4);
         JList list = createJList(loanPayments);
 
+        backButton = createBackButton();
         backButton.addActionListener(listener);
         JPanel btnPanel = createPanel();
         btnPanel.setLayout(new GridLayout(2,1,10,10));

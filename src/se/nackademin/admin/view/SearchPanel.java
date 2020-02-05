@@ -12,9 +12,10 @@ public class SearchPanel {
     private JTextField searchField;
     private PanelHandler panelHandler;
     private JLabel errorText;
-    private JButton search;
+    private JButton searchButton;
+    private JButton newCustomerButton;
 
-    public SearchPanel(PanelHandler panelHandler, ActionListener listener) {
+    public SearchPanel(PanelHandler panelHandler) {
 
         this.panelHandler = panelHandler;
 
@@ -29,22 +30,24 @@ public class SearchPanel {
 
         JPanel loginCenterPanel = SwingSetup.createPanel();
         searchPanel.add(loginCenterPanel, BorderLayout.SOUTH);
+        loginCenterPanel.setLayout(new GridLayout(2, 2,20,20));
         loginCenterPanel.setLayout(new GridLayout(5, 1));
         loginCenterPanel.setBorder(new EmptyBorder(10, 180, 210, 180));
 
-        loginCenterPanel.add(createLabel("Sök kund", 0));
+        loginCenterPanel.add(createBigLabel("Sök kund:", 0));
 
         searchField = SwingSetup.createTextField();
         loginCenterPanel.add(searchField);
 
-        loginCenterPanel.add(createLabel("",0));
+        searchButton = createButton("Sök");
+        newCustomerButton = createButton("Ny kund");
 
-        search = createButton("Sök");
-        loginCenterPanel.add(search);
-        search.setBackground(new Color(16, 123, 214));
-        search.setForeground(new Color(208, 228, 255));
-        search.setPreferredSize(new Dimension(30,30));
-        search.addActionListener(listener);
+        loginCenterPanel.add(newCustomerButton);
+        loginCenterPanel.add(searchButton);
+        searchButton.setBackground(new Color(16, 123, 214));
+        searchButton.setForeground(new Color(208, 228, 255));
+        searchButton.setPreferredSize(new Dimension(30,30));
+
 
         panelHandler.setSearchPanel(searchPanel);
     }
@@ -74,10 +77,15 @@ public class SearchPanel {
     }
 
     public JButton getSearchButton() {
-        return this.search;
+        return this.searchButton;
     }
 
     public void setSearchButton(JButton search) {
-        this.search = search;
+        this.searchButton = search;
+    }
+
+    public void addListener(ActionListener searchlistener, ActionListener newCustomerListener) {
+        searchButton.addActionListener(searchlistener);
+        newCustomerButton.addActionListener(newCustomerListener);
     }
 }

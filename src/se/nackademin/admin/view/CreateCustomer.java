@@ -6,11 +6,14 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
+import static se.nackademin.admin.view.SwingSetup.createBackButton;
+import static se.nackademin.admin.view.SwingSetup.createLabel;
+import static se.nackademin.admin.view.SwingSetup.createPanel;
 import static se.nackademin.customer.view.SwingSetup.*;
 
 public class CreateCustomer {
 
-    JButton createButton;
+    private JButton createButton;
 
     PanelHandler panelHandler;
     private JTextField firstName;
@@ -18,6 +21,7 @@ public class CreateCustomer {
     private JTextField personalNumber;
     private JTextField pinCode;
     private JLabel errorText;
+    private JButton backButton;
 
     public CreateCustomer(PanelHandler panelHandler) {
 
@@ -30,6 +34,7 @@ public class CreateCustomer {
 
         JPanel createCustomerCenterPanel = SwingSetup.createPanel();
         createButton = createButton("Skapa kund");
+        backButton = createButton("Tillbaka");
 
         createCustomerCenterPanel.setLayout(new GridLayout(5, 2, 20, 20));
         createCustomerCenterPanel.add(createLabel("Förnamn", 2));
@@ -40,13 +45,15 @@ public class CreateCustomer {
         createCustomerCenterPanel.add(createLabel("Pinkod", 2));
         createCustomerCenterPanel.add(personalNumber);
         createCustomerCenterPanel.add(pinCode);
-        createCustomerCenterPanel.add(createLabel("", 0));
+        createCustomerCenterPanel.add(backButton);
         createCustomerCenterPanel.add(createButton);
-        createCustomerCenterPanel.setBorder(new EmptyBorder(10, 180, 210, 180));
+        createCustomerCenterPanel.setBorder(new EmptyBorder(10, 180, 160, 180));
+
 
         JPanel createCustomerPanel = createPanel();
         createCustomerPanel.setLayout(new BorderLayout());
         errorText.setVerticalAlignment(JLabel.CENTER);
+
         createCustomerPanel.setLayout(new BorderLayout());
         createCustomerPanel.add(createLogo(), BorderLayout.NORTH);
         createCustomerPanel.add(errorText, BorderLayout.CENTER);
@@ -56,6 +63,7 @@ public class CreateCustomer {
     }
 
     public void addListener(ActionListener listener) {
+        backButton.addActionListener(listener);
         createButton.addActionListener(listener);
     }
 
@@ -97,6 +105,26 @@ public class CreateCustomer {
 
     public void setPinCode(JTextField pinCode) {
         this.pinCode = pinCode;
+    }
+
+    public void addBackButtonListener(ActionListener listener) {
+        backButton.addActionListener(listener);
+    }
+
+    public JButton getCreateButton() {
+        return createButton;
+    }
+
+    public void setCreateButton(JButton createButton) {
+        this.createButton = createButton;
+    }
+
+    public JButton getBackButton() {
+        return backButton;
+    }
+
+    public void setBackButton(JButton backButton) {
+        this.backButton = backButton;
     }
 }
 

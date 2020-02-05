@@ -1,5 +1,3 @@
-
-
 -- drop database NackademiBankenDB;
 create database if not exists NackademiBankenDB;
 use NackademiBankenDB;
@@ -50,8 +48,8 @@ create table if not exists Account
     id int not null auto_increment primary key,
     accountName varchar(50) not null,
     customerId int not null ,
-    balance double,
-    interestId int not null,
+    balance double default 0,
+    interestId int default 2,
     foreign key (customerId) references Customer(id) on delete cascade,
     foreign key (interestId) references Interest(id)
 );
@@ -230,7 +228,7 @@ SELECT 'SQL EXCEPTIONEN ERROR' as errormessage;
 END;
 start transaction;
 update Customer
-set firstName = InfirstName and lastName = Inlastname and personalNr = InpersonalNr and pinCode = InpinCode
+set firstName = InfirstName , lastName = Inlastname , personalNr = InpersonalNr , pinCode = InpinCode
 where id = customerId;
 commit;
 end //
