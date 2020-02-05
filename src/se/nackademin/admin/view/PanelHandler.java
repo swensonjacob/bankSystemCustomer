@@ -16,19 +16,25 @@ public class PanelHandler extends JFrame{
     private JPanel loanPanel;
     private JPanel accountPanel;
     private JPanel loginPanel;
+    private JPanel createCustomerPanel;
+    private JPanel updateCustomerPanel;
     private MainMenuView mainMenuView;
     private LoanInfo loanInfo;
     private AccountInfo accountInfo;
     private LoginView loginView;
+    private CreateCustomer createCustomerView;
+    private UpdateCustomer updateCustomerView;
 
     public PanelHandler() {
 
         loginView = new LoginView(this);
-
+        createCustomerView = new CreateCustomer(this);
+        updateCustomerView = new UpdateCustomer(this);
         cardLayout = new CardLayout();
         mainPanel = new JPanel(cardLayout);
+        mainPanel.add(updateCustomerPanel,"updateCustomer");
+        mainPanel.add(createCustomerPanel,"createCustomer");
         mainPanel.add(loginPanel,"login");
-
 
 
         add(mainPanel);
@@ -74,6 +80,13 @@ public class PanelHandler extends JFrame{
        this.mainMenuView = new MainMenuView(this, accountlistener, loanListener,loans,accounts);
        mainPanel.add(mainMenu, "mainMenu");
        changePanel("mainMenu");
+    }
+
+    public void changeToChangeCustomerPanel() {
+        changePanel("createCustomer");
+    }
+    public void changeToUpdateCustomerPanel() {
+        changePanel("updateCustomer");
     }
 
     public MainMenuView getMainMenuView() {
@@ -122,5 +135,37 @@ public class PanelHandler extends JFrame{
 
     public void setLoginView(LoginView loginView) {
         this.loginView = loginView;
+    }
+
+    public JPanel getCreateCustomerPanel() {
+        return createCustomerPanel;
+    }
+
+    public void setCreateCustomerPanel(JPanel createCustomerPanel) {
+        this.createCustomerPanel = createCustomerPanel;
+    }
+
+    public CreateCustomer getCreateCustomerView() {
+        return createCustomerView;
+    }
+
+    public void setCreateCustomerView(CreateCustomer createCustomerView) {
+        this.createCustomerView = createCustomerView;
+    }
+
+    public JPanel getUpdateCustomerPanel() {
+        return updateCustomerPanel;
+    }
+
+    public void setUpdateCustomerPanel(JPanel updateCustomerPanel) {
+        this.updateCustomerPanel = updateCustomerPanel;
+    }
+
+    public UpdateCustomer getUpdateCustomerView() {
+        return updateCustomerView;
+    }
+
+    public void setUpdateCustomerView(UpdateCustomer updateCustomerView) {
+        this.updateCustomerView = updateCustomerView;
     }
 }

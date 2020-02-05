@@ -18,8 +18,42 @@ public class Controller {
         panelHandler = new PanelHandler();
         repository = new Repository();
         panelHandler.getLoginView().addLoginListener(new LoginListener());
+        panelHandler.getCreateCustomerView().addListener(new CreateCustomerListener());
+        panelHandler.getUpdateCustomerView().addListener(new UpdateCustomerListener());
+
+
 
     }
+
+    class CreateCustomerListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+            if (!textFieldEmpty()) {
+                //repo create customer
+                changeToMainMenu();
+            } else {
+                panelHandler.getCreateCustomerView().getErrorText().setText("Samtliga fält måste fyllas i");
+            }
+
+        }
+    }
+    class UpdateCustomerListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+            if (!textFieldEmpty()) {
+                //repo update customer
+                changeToMainMenu();
+            } else {
+                panelHandler.getCreateCustomerView().getErrorText().setText("Samtliga fält måste fyllas i");
+            }
+
+        }
+    }
+
         class LoanButtonListener implements ActionListener {
 
             @Override
@@ -86,6 +120,16 @@ public class Controller {
                     repository.getLoansFromCustomer(currentCustomer), repository.getAccountFromCustomer(currentCustomer));
         }
 
+        private boolean textFieldEmpty() {
+        if (panelHandler.getCreateCustomerView().getFirstName().getText().equals("") ||
+                panelHandler.getCreateCustomerView().getLastName().getText().equals("") ||
+                panelHandler.getCreateCustomerView().getPersonalNumber().getText().equals("") ||
+                panelHandler.getCreateCustomerView().getPinCode().getText().equals("")) {
+            return true;
+        } else {
+            return false;
+        }
+        }
 
     }
 

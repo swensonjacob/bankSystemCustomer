@@ -18,10 +18,11 @@ public class LoginView {
 
     public LoginView(PanelHandler panelHandler) {
 
+
         this.panelHandler = panelHandler;
 
-        JPanel loginCenterPanel = SwingSetup.createPanel();
-        loginButton = createButton("Logga in");
+    JPanel loginCenterPanel = SwingSetup.createPanel();
+    loginButton = createButton("Logga in");
         loginButton.setBackground(new Color(16, 123, 214));
         loginButton.setForeground(new Color(208, 228, 255));
 
@@ -34,9 +35,9 @@ public class LoginView {
         loginCenterPanel.add(loginButton);
         loginCenterPanel.setBorder(new EmptyBorder(10, 180, 210, 180));
 
-        JPanel loginPanel = createPanel();
+    JPanel loginPanel = createPanel();
         loginPanel.setLayout(new BorderLayout());
-        errorText= createLabel("",0);
+    errorText= createLabel("",0);
         errorText.setVerticalAlignment(JLabel.CENTER);
         loginPanel.setLayout(new BorderLayout());
         loginPanel.add(createLogo(), BorderLayout.NORTH);
@@ -44,8 +45,7 @@ public class LoginView {
         loginPanel.add(loginCenterPanel, BorderLayout.SOUTH);
 
         panelHandler.setLoginPanel(loginPanel);
-    }
-
+}
     public void addLoginListener(ActionListener listener) {
         loginButton.addActionListener(listener);
     }

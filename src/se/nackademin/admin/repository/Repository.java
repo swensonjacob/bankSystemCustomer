@@ -16,7 +16,7 @@ public class Repository {
 
     public Repository() {
         try {
-        info.load(new FileInputStream("src/se/nackademin/admin/settings/settings.properties"));
+        info.load(new FileInputStream("src/se/nackademin/settings/settings.properties"));
     } catch (
     IOException e) {
         e.getMessage();
