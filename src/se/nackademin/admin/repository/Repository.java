@@ -2,9 +2,11 @@ package se.nackademin.admin.repository;
 
 import se.nackademin.admin.model.*;
 
+import javax.swing.*;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -189,6 +191,273 @@ public class Repository {
         }
 
     }
+    public boolean deleteAccount(int accountID) {
+        try (
+                Connection conn = DriverManager.getConnection(info.getProperty("connectionString"),
+                        info.getProperty("user"),
+                        info.getProperty("password"));
+                PreparedStatement stm = conn.prepareStatement("delete from Account where id = ?")) {
 
+            stm.setInt(1, accountID);
+            stm.execute();
+            return true;
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Något gick fel, Kontot ej borttaget");
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean changeRateForAccount(int accountID, double newInterestRate) {
+        try (
+                Connection conn = DriverManager.getConnection(info.getProperty("connectionString"),
+                        info.getProperty("user"),
+                        info.getProperty("password"));
+                CallableStatement stm = conn.prepareCall("CALL changeRateForAccount(?,?)")) {
+
+            stm.setInt(1, accountID);
+            stm.setDouble(2, newInterestRate);
+            stm.execute();
+            return true;
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Något gick fel, Räntan ej ändrad");
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
+    public boolean changeRateForLoan(int loanID, double newInterestRate) {
+        try (
+                Connection conn = DriverManager.getConnection(info.getProperty("connectionString"),
+                        info.getProperty("user"),
+                        info.getProperty("password"));
+                CallableStatement stm = conn.prepareCall("CALL changeRateForLoan(?,?)")) {
+
+            stm.setInt(1, loanID);
+            stm.setDouble(2, newInterestRate);
+            stm.execute();
+            return true;
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Något gick fel, Räntan ej ändrad");
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean createLoan(int customerID, int amount, int accountID, String loanNumber, int loanTimeInMonth) {
+        try (
+                Connection conn = DriverManager.getConnection(info.getProperty("connectionString"),
+                        info.getProperty("user"),
+                        info.getProperty("password"));
+                CallableStatement stm = conn.prepareCall("CALL createLoan(?,?,?,?,?)")) {
+
+            stm.setInt(1, customerID);
+            stm.setInt(2, amount);
+            stm.setInt(3, accountID);
+            stm.setString(4, loanNumber);
+            stm.setInt(5, loanTimeInMonth);
+            stm.execute();
+            return true;
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Något gick fel, Lånet skapades ej");
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
+    public boolean addNewCustomer(String firstName, String lastName, String personalNR, String pinCode) {
+        try (
+                Connection conn = DriverManager.getConnection(info.getProperty("connectionString"),
+                        info.getProperty("user"),
+                        info.getProperty("password"));
+                CallableStatement stm = conn.prepareCall("CALL addCustomer(?,?,?,?)")) {
+
+            stm.setString(1, firstName);
+            stm.setString(2, lastName);
+            stm.setString(3, personalNR);
+            stm.setString(4, pinCode);
+            stm.execute();
+            return true;
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Något gick fel, Kund kunde ej läggas till ");
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean updateCustomerInfo(int customerID, String firstName, String lastName, String personalNr, String pinCode) {
+        try (
+                Connection conn = DriverManager.getConnection(info.getProperty("connectionString"),
+                        info.getProperty("user"),
+                        info.getProperty("password"));
+                CallableStatement stm = conn.prepareCall("CALL updateCustomer(?,?,?,?,?)")) {
+
+            stm.setInt(1, customerID);
+            stm.setString(2, firstName);
+            stm.setString(3, lastName);
+            stm.setString(4, personalNr);
+            stm.setString(5, pinCode);
+            stm.execute();
+            return true;
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Något gick fel, Ändringarna gick ej igenom");
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
+    public boolean deleteCustomer(int customerID) {
+        try (
+                Connection conn = DriverManager.getConnection(info.getProperty("connectionString"),
+                        info.getProperty("user"),
+                        info.getProperty("password"));
+                CallableStatement stm = conn.prepareCall("CALL deleteCustomer(?)")) {
+
+            stm.setInt(1, customerID);
+            stm.execute();
+            return true;
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Något gick fel, Personen är kvar i systemet");
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
+    public boolean changeLoanTimebyMonth(int loanID, int newLoantime) {
+        try (
+                Connection conn = DriverManager.getConnection(info.getProperty("connectionString"),
+                        info.getProperty("user"),
+                        info.getProperty("password"));
+                Statement stm = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
+            ResultSet resultSet = stm.executeQuery("select * from Loan");
+
+            while (resultSet.next()) {
+                if (resultSet.getInt("id") == (loanID)) {
+                    resultSet.updateInt("loanTime", newLoantime);
+                    resultSet.updateRow();
+
+                }
+            }
+
+            // funkar detta såhär??
+            return true;
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Något gick fel, Ändringen gick inte igenom");
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean updateBalanceForAccount(int accountID, int amount) {
+        try (
+                Connection conn = DriverManager.getConnection(info.getProperty("connectionString"),
+                        info.getProperty("user"),
+                        info.getProperty("password"));
+                CallableStatement stm = conn.prepareCall("CALL updateBankAccount(?,?)")) {
+
+            stm.setInt(1, accountID);
+            stm.setInt(2, amount);
+            stm.execute();
+            return true;
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Något gick fel, insättningen gick inte igenom");
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean addNewAccount(String accountName, int customerID) {
+        try (
+                Connection conn = DriverManager.getConnection(info.getProperty("connectionString"),
+                        info.getProperty("user"),
+                        info.getProperty("password"));
+                PreparedStatement stm = conn.prepareStatement("insert into Account (accountName, customerId) values (?,?)")) {
+
+            stm.setString(1, accountName);
+            stm.setInt(2, customerID);
+            stm.execute();
+            return true;
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Något gick fel, Kontot kunde ej läggas till");
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
+    public List<AccountHistory> getAccountHistory(String firstDate, String lastDate) {
+        List<AccountHistory> getAccountHistory = new ArrayList<>();
+        try (
+                Connection conn = DriverManager.getConnection(info.getProperty("connectionString"),
+                        info.getProperty("user"),
+                        info.getProperty("password"));
+                PreparedStatement stm = conn.prepareStatement("select ah.id, ah.accountId, ah.action, ah.amount, ah.balanceAfterAction, ah.date from Customer " +
+                        "join Account on customerid = Customer.id " +
+                        "join AccountHistory ah on accountid = Account.id " +
+                        "where ah.date between ? and ?")) {
+            stm.setString(1,firstDate);
+            stm.setString(2, String.valueOf(LocalDate.parse(lastDate).plusDays(1)));
+            ResultSet rs = stm.executeQuery();
+            while(rs.next()) {
+                AccountHistory accountHistory = new AccountHistory();
+                accountHistory.setId(rs.getInt(1));
+                accountHistory.setAccountId(rs.getInt(2));
+                accountHistory.setTransactionType(rs.getString(3));
+                accountHistory.setAmount(rs.getDouble(4));
+                accountHistory.setBalanceAfterAction(rs.getDouble(5));
+                accountHistory.setDate(rs.getTimestamp(6));
+                getAccountHistory.add(accountHistory);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return getAccountHistory;
+    }
+
+    public static void main(String[] args) {
+        Repository test = new Repository();
+        //test.deleteAccount(4); Funkar
+        //test.changeRateForAccount(5,1); Funkar
+        //test.changeRateForLoan(3,0.5); Funkar
+        //test.createLoan(2,10000000,5,"123123123",24);
+        //test.addNewCustomer("Johannes","Svensson","123456","1234"); Funkar
+        //test.updateCustomerInfo(2,"Johannes","Aka The God","880203","1234"); Funkar
+        //test.deleteCustomer(3); Funkar
+        //test.changeLoanTimebyMonth(3,24);
+        //test.updateBalanceForAccount(5,10);
+        //test.addNewAccount("12345678",1);
+        for (AccountHistory a : test.getAccountHistory("2016-01-01","2020-02-05")){
+            System.out.println(a.getId());
+            System.out.println(a.getDate());
+        }
+
+    }
 }
+
+
 
