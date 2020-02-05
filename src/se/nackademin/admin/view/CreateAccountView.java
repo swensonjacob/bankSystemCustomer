@@ -25,7 +25,7 @@ public class CreateAccountView {
         rent=createTextField();
 
         JPanel createAccountCenterPanel = SwingSetup.createPanel();
-        createButton = createButton("Öppna konto");
+        createButton = createButton("Bevilja");
 
         createAccountCenterPanel.setLayout(new GridLayout(8, 1, 10, 10));
         createAccountCenterPanel.add(SwingSetup.createBigLabel("Öppna upp ett nytt konto", 2));
