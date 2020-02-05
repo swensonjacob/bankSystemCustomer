@@ -1,5 +1,6 @@
 package se.nackademin.admin.controller;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -19,11 +20,27 @@ public class UpdateCustomerController {
         @Override
         public void actionPerformed(ActionEvent e) {
 
-            if (!controller.textFieldEmpty()) {
-                //repo update customer
-            } else {
-                controller.getPanelHandler().getCreateCustomerView().getErrorText().setText("Samtliga fält måste fyllas i");
-            }
+                if (e.getSource() == controller.getPanelHandler().getUpdateCustomerView().getUpdateButton()) {
+                    if (!textFieldEmpty()) {
+                       if(controller.getRepository().updateCustomerInfo(controller.getCurrentCustomer().getId(),
+                                controller.getPanelHandler().getUpdateCustomerView().getFirstName().getText(),
+                                controller.getPanelHandler().getUpdateCustomerView().getLastName().getText(),
+                                controller.getPanelHandler().getUpdateCustomerView().getPersonalNumber().getText(),
+                                controller.getPanelHandler().getUpdateCustomerView().getPinCode().getText())) {
+                           JOptionPane.showMessageDialog(null,"Kund uppdaterad");
+                       }
+                        controller.getPanelHandler().changeToAdminMenu(controller.getAdminMenuController().getNewMenuButtonListener());
+
+                    } else {
+                        controller.getPanelHandler().getCreateCustomerView().getErrorText().setText("Samtliga fält måste fyllas i");
+                    }
+                } else if (e.getSource() == controller.getPanelHandler().getUpdateCustomerView().getEraseButton()) {
+                    if(controller.getRepository().deleteCustomer(controller.getCurrentCustomer().getId())) {
+                        JOptionPane.showMessageDialog(null, "Kund Raderad");
+                    }
+                    controller.getPanelHandler().changeToSearchPanel();
+                }
+
 
         }
     }
@@ -36,4 +53,15 @@ public class UpdateCustomerController {
 
             }
         }
+
+    public boolean textFieldEmpty() {
+        if (controller.getPanelHandler().getUpdateCustomerView().getFirstName().getText().equals("") ||
+                controller.getPanelHandler().getUpdateCustomerView().getLastName().getText().equals("") ||
+                controller.getPanelHandler().getUpdateCustomerView().getPersonalNumber().getText().equals("") ||
+                controller.getPanelHandler().getUpdateCustomerView().getPinCode().getText().equals("")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
     }

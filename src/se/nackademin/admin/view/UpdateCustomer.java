@@ -20,7 +20,6 @@ public class UpdateCustomer {
     private JTextField personalNumber;
     private JTextField pinCode;
     private JLabel errorText;
-    private Customer customer;
     private JButton backButton;
 
     public UpdateCustomer(PanelHandler panelHandler) {
@@ -67,8 +66,8 @@ public class UpdateCustomer {
     }
 
     public void addListener(ActionListener listener) {
-        updateButton.addActionListener(listener);
-        eraseButton.addActionListener(listener);
+        this.updateButton.addActionListener(listener);
+        this.eraseButton.addActionListener(listener);
     }
 
     public JLabel getErrorText() {
@@ -114,6 +113,30 @@ public class UpdateCustomer {
 
     public void setPinCode(JTextField pinCode) {
         this.pinCode = pinCode;
+    }
+
+    public JButton getUpdateButton() {
+        return updateButton;
+    }
+
+    public void setUpdateButton(JButton updateButton) {
+        this.updateButton = updateButton;
+    }
+
+    public JButton getBackButton() {
+        return backButton;
+    }
+
+    public void setBackButton(JButton backButton) {
+        this.backButton = backButton;
+    }
+
+    public JButton getEraseButton() {
+        return eraseButton;
+    }
+
+    public void setEraseButton(JButton eraseButton) {
+        this.eraseButton = eraseButton;
     }
 }
 
