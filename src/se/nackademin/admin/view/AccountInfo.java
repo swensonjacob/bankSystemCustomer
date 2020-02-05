@@ -16,6 +16,10 @@ public class AccountInfo {
     private PanelHandler panelHandler;
     private DefaultListModel accountTransactions;
     private JButton backButton;
+    private JTextField startDate;
+    private JTextField endDate;
+    private JTextField withdrawSum;
+
 
     public AccountInfo(PanelHandler panelHandler, ActionListener listener) {
 
@@ -40,7 +44,7 @@ public class AccountInfo {
         JPanel buttons = createPanel();
         buttons.setLayout(new GridLayout(1, 3, 10, 10));
 
-        JTextField withdrawSum = createTextField();
+        withdrawSum = createTextField();
         JButton withdrawButton = createButton("Ta ut");
         JButton depositButton = createButton("Sätt in");
 
@@ -48,22 +52,22 @@ public class AccountInfo {
         buttons.add(withdrawButton);
         buttons.add(depositButton);
 
-        JPanel mounthInputs = createPanel();
-        mounthInputs.setLayout(new GridLayout(1, 3, 10, 10));
+        JPanel dateInput = createPanel();
+        dateInput.setLayout(new GridLayout(1, 3, 10, 10));
 
-        JTextField startMounth = createTextField();
-        JTextField stopMounth = createTextField();
+        startDate = createTextField();
+        endDate = createTextField();
         JButton showHistory = createButton("Visa");
 
-        mounthInputs.add(startMounth);
-        mounthInputs.add(stopMounth);
-        mounthInputs.add(showHistory);
+        dateInput.add(startDate);
+        dateInput.add(endDate);
+        dateInput.add(showHistory);
 
         withdrawPanel.add(createLabel("Ange belopp",2));
         withdrawPanel.add(buttons);
 
         withdrawPanel.add(createLabel("ange datum för historia", 2));
-        withdrawPanel.add(mounthInputs);
+        withdrawPanel.add(dateInput);
 
         withdrawPanel.setBorder(new EmptyBorder(0,10,0,10));
 
@@ -87,6 +91,22 @@ public class AccountInfo {
         accountPanel.add(paymentList,BorderLayout.SOUTH);
 
         panelHandler.setAccountPanel(accountPanel);
+    }
+
+    public JTextField getStartDate() {
+        return startDate;
+    }
+
+    public JTextField getEndDate() {
+        return endDate;
+    }
+
+    public JTextField getWithdrawSum() {
+        return withdrawSum;
+    }
+
+    public Account getCurrentAccount() {
+        return currentAccount;
     }
 
     public void showTransactionHistory () {

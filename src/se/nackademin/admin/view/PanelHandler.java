@@ -34,8 +34,14 @@ public class PanelHandler extends JFrame{
         searchView = new SearchPanel(this);
         createAccountView = new CreateAccountView(this);
 
+
         cardLayout = new CardLayout();
         mainPanel = new JPanel(cardLayout);
+
+//        adminMenuView = new AdminMenu(this,null);
+//        mainPanel.add(adminMenuPanel);
+
+
         mainPanel.add(loginPanel,"login");
         mainPanel.add(searchPanel, "search");
         mainPanel.add(updateCustomerPanel,"updateCustomer");

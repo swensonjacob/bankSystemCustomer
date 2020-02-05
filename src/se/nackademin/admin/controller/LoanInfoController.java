@@ -7,4 +7,5 @@ public class LoanInfoController {
     public LoanInfoController(Controller controller) {
         this.controller = controller;
     }
+
 }

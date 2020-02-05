@@ -35,19 +35,10 @@ public class Controller {
         updateCustomer = new UpdateCustomerController(this);
 
     }
-        private boolean personalNumberExists(String personalNr) {
+    private boolean personalNumberExists(String personalNr) {
             return repository.verifyPersonalNumber(personalNr);
         }
 
-        private boolean passwordCorrect(String username, String password) {
-        Customer customer = repository.verifyPin(username,password);
-        if (customer!= null) {
-            currentCustomer = customer;
-            return true;
-        } else {
-            return false;
-        }
-        }
 
     public PanelHandler getPanelHandler() {
         return panelHandler;
