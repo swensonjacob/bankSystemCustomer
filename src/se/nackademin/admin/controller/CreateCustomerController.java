@@ -1,5 +1,6 @@
 package se.nackademin.admin.controller;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -21,7 +22,18 @@ public class CreateCustomerController {
 
             if (e.getSource()==controller.getPanelHandler().getCreateCustomerView().getCreateButton()) {
                 if (!controller.textFieldEmpty()) {
-                    controller.getPanelHandler().changeToAdminMenu(controller.getAdminMenuController().getNewMenuButtonListener());
+                    String firstName = controller.getPanelHandler().getCreateCustomerView().getFirstName().getText();
+                    String lastName = controller.getPanelHandler().getCreateCustomerView().getLastName().getText();
+                    String personalNR = controller.getPanelHandler().getCreateCustomerView().getPersonalNumber().getText();
+                    String pinCode = controller.getPanelHandler().getCreateCustomerView().getPinCode().getText();
+
+
+                    if (controller.getRepository().addNewCustomer(firstName,lastName,personalNR,pinCode)) {
+                        JOptionPane.showMessageDialog(null, firstName + " tillagd som en ny kund.");
+                        controller.getPanelHandler().changeToAdminMenu(controller.getAdminMenuController().getNewMenuButtonListener());
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Något gick fel, Kund kunde ej läggas till.");
+                    }
                 } else {
                     controller.getPanelHandler().getCreateCustomerView().getErrorText().setText("Samtliga fält måste fyllas i");
                 }

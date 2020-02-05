@@ -89,6 +89,8 @@ public class PanelHandler extends JFrame{
 
     }
 
+
+
     public void changeToSearchPanel() {
         changePanel("search");
     }
@@ -149,8 +151,8 @@ public class PanelHandler extends JFrame{
         this.searchPanel = searchPanel;
     }
 
-    public JPanel getSearchPanel() {
-        return this.searchPanel;
+    public SearchPanel getSearchPanel() {
+        return this.searchView;
     }
 
     public JPanel getCreateCustomerPanel() {

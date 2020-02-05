@@ -290,7 +290,6 @@ public class Repository {
             return true;
 
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Något gick fel, Kund kunde ej läggas till ");
             System.out.println(e.getMessage());
             e.printStackTrace();
             return false;
