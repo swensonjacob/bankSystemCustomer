@@ -11,8 +11,8 @@ import java.io.IOException;
 
 public class SwingSetup {
 
-    private static String bankPrinter = "src/se/nackademin/admin/resources/F25BankPrinter.ttf";
-    private static String Raleway = "src/se/nackademin/admin/resources/Raleway.ttf";
+    private static String bankPrinter = "src/se/nackademin/resources/F25BankPrinter.ttf";
+    private static String Raleway = "src/se/nackademin/resources/Raleway.ttf";
 
     public static JButton createTwoLineButton(String numberId, double balance, int type) {
 
@@ -121,7 +121,7 @@ public class SwingSetup {
     }
 
     public static JLabel createLogo() {
-        String logoPath = "src/se/nackademin/admin/resources/logo.png";
+        String logoPath = "src/se/nackademin/resources/logo.png";
         JLabel logoShoe = new JLabel(new ImageIcon(logoPath));
         logoShoe.setBorder(new EmptyBorder(10, 10, 10, 10));
         return logoShoe;
@@ -147,7 +147,7 @@ public class SwingSetup {
         return createIconButton(filename);
     }
     private static JButton createIconButton(String fileName) {
-        Icon icon = new ImageIcon("src/se/nackademin/admin/resources/" + fileName);
+        Icon icon = new ImageIcon("src/se/nackademin/resources/" + fileName);
         JButton button = new JButton(icon);
         //button.setForeground(new Color(200, 57, 65));
         //button.setBackground(Color.white);

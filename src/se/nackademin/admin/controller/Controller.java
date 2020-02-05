@@ -73,7 +73,7 @@ public class Controller {
         class LoanInfoListener implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
-            changeToMainMenu();
+                panelHandler.changeToCustomerView();
             }
         }
 
@@ -82,6 +82,8 @@ public class Controller {
             @Override
             public void actionPerformed(ActionEvent e) {
 
+                //Utkommenterad av marcus för testsyften
+                /*
                 String passwordString = new String (panelHandler.getLoginView().getPassword().getPassword());
                 String usernameInput = panelHandler.getLoginView().getUsername().getText();
                 if (personalNumberExists(usernameInput)) {
@@ -98,6 +100,16 @@ public class Controller {
                    panelHandler.getLoginView().getUsername().setText("");
                     panelHandler.getLoginView().getPassword().setText("");
                 }
+                */
+
+                panelHandler.changeToSearchPanel(new SearchListener());
+            }
+        }
+
+        class SearchListener implements ActionListener {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                panelHandler.changeToCustomerView();
             }
         }
 
@@ -132,4 +144,3 @@ public class Controller {
         }
 
     }
-

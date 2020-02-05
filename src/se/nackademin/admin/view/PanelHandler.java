@@ -1,8 +1,5 @@
 package se.nackademin.admin.view;
 
-import se.nackademin.admin.model.Account;
-import se.nackademin.admin.model.Loan;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -12,10 +9,14 @@ public class PanelHandler extends JFrame{
 
     private CardLayout cardLayout;
     private JPanel mainPanel;
-    private JPanel mainMenu;
+    private JPanel customerPanel;
     private JPanel loanPanel;
     private JPanel accountPanel;
     private JPanel loginPanel;
+    private JPanel searchPanel;
+
+    private SearchPanel searchView;
+    private CustomerView customerView;
     private JPanel createCustomerPanel;
     private JPanel updateCustomerPanel;
     private MainMenuView mainMenuView;
@@ -37,6 +38,7 @@ public class PanelHandler extends JFrame{
         mainPanel.add(loginPanel,"login");
 
 
+
         add(mainPanel);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
@@ -44,12 +46,12 @@ public class PanelHandler extends JFrame{
         setSize(new Dimension(800, 600));
     }
 
-    public JPanel getMainMenu() {
-        return mainMenu;
+    public JPanel getCustomerPanel() {
+        return this.customerPanel;
     }
 
-    public void setMainMenu(JPanel mainMenu) {
-        this.mainMenu = mainMenu;
+    public void setCustomerPanel(JPanel customerPanel) {
+        this.customerPanel = customerPanel;
     }
 
     public JPanel getLoanPanel() {
@@ -75,11 +77,16 @@ public class PanelHandler extends JFrame{
         changePanel("account");
     }
 
-   public void changeToMainMenu(ActionListener accountlistener,
-                                ActionListener loanListener, List<Loan> loans, List<Account> accounts) {
-       this.mainMenuView = new MainMenuView(this, accountlistener, loanListener,loans,accounts);
-       mainPanel.add(mainMenu, "mainMenu");
-       changePanel("mainMenu");
+   public void changeToCustomerView() {
+       this.customerView = new CustomerView(this);
+       mainPanel.add(customerPanel, "customerView");
+       changePanel("customerView");
+    }
+
+    public void changeToSearchPanel(ActionListener listener) {
+        searchView = new SearchPanel(this, listener);
+        mainPanel.add(searchPanel, "search");
+        changePanel("search");
     }
 
     public void changeToChangeCustomerPanel() {
@@ -91,10 +98,12 @@ public class PanelHandler extends JFrame{
 
     public MainMenuView getMainMenuView() {
         return mainMenuView;
+    public CustomerView getCustomerView() {
+        return this.customerView;
     }
 
-    public void setMainMenuView(MainMenuView mainMenuView) {
-        this.mainMenuView = mainMenuView;
+    public void setCustomerView(CustomerView customerView) {
+        this.customerView = customerView;
     }
 
     public LoanInfo getLoanInfo() {
@@ -137,6 +146,14 @@ public class PanelHandler extends JFrame{
         this.loginView = loginView;
     }
 
+    public void setSearchPanel(JPanel searchPanel) {
+        this.searchPanel = searchPanel;
+    }
+
+    public JPanel getSearchPanel() {
+        return this.searchPanel;
+    }
+
     public JPanel getCreateCustomerPanel() {
         return createCustomerPanel;
     }
@@ -167,5 +184,14 @@ public class PanelHandler extends JFrame{
 
     public void setUpdateCustomerView(UpdateCustomer updateCustomerView) {
         this.updateCustomerView = updateCustomerView;
+    }
+}
+
+    public void setSearchView(SearchPanel searchview) {
+        this.searchView = searchview;
+    }
+
+    public SearchPanel getSearchView() {
+        return this.searchView;
     }
 }

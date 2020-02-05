@@ -24,8 +24,7 @@ public class MainMenuView {
     private List<JButton> loanButtons;
     private List<JButton> accountButtons;
 
-    public MainMenuView(PanelHandler panelHandler, ActionListener accountListener,
-                        ActionListener loanListener, List<Loan> loans,List<Account> accounts) {
+    public MainMenuView(PanelHandler panelHandler, ActionListener accountListener,ActionListener loanListener, List<Loan> loans,List<Account> accounts) {
         this.panelHandler = panelHandler;
         loanButtons = new ArrayList<>();
         accountButtons = new ArrayList<>();
