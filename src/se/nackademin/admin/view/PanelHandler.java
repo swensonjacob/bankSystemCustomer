@@ -1,8 +1,12 @@
 package se.nackademin.admin.view;
 
+import se.nackademin.admin.model.Account;
+import se.nackademin.admin.model.Loan;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 public class PanelHandler extends JFrame{
 
@@ -35,6 +39,7 @@ public class PanelHandler extends JFrame{
         updateCustomerView = new UpdateCustomer(this);
         searchView = new SearchPanel(this);
         createAccountView = new CreateAccountView(this);
+        createLoanView = new CreateLoanView(this);
 
         cardLayout = new CardLayout();
         mainPanel = new JPanel(cardLayout);
@@ -44,6 +49,8 @@ public class PanelHandler extends JFrame{
         mainPanel.add(updateCustomerPanel,"updateCustomer");
         mainPanel.add(createCustomerPanel,"createCustomer");
         mainPanel.add(createAccountPanel,"createAccount");
+        mainPanel.add(createLoanPanel,"createLoan");
+
 
         add(mainPanel);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -75,29 +82,31 @@ public class PanelHandler extends JFrame{
         changePanel("createCustomer");
     }
 
-    public void changeToLoanPanel(ActionListener listener) {
-        loanInfo = new LoanInfo(this, listener);
+    public void changeToLoanPanel(ActionListener listener, Loan loan) {
+        loanInfo = new LoanInfo(this, listener, loan);
         mainPanel.add(loanPanel, "loan");
         changePanel("loan");
     }
 
-    public void changeToAccountPanel(ActionListener listener) {
-        this.accountInfo = new AccountInfo(this, listener);
+    public void changeToAccountPanel(ActionListener listener, Account account) {
+        this.accountInfo = new AccountInfo(this, listener, account);
         mainPanel.add(accountPanel, "account");
         changePanel("account");
     }
 
-   public void changeToAdminMenu(ActionListener listener) {
-       this.adminMenuView = new AdminMenu(this,listener);
+   public void changeToAdminMenu(ActionListener listener, List<Loan> loans, List<Account> accounts,ActionListener loanlistener, ActionListener accountListener) {
+       this.adminMenuView = new AdminMenu(this,listener,loans,accounts,loanlistener,accountListener);
        mainPanel.add(adminMenuPanel, "adminMenu");
        changePanel("adminMenu");
 
     }
 
-
-
     public void changeToCreateAccountPanel() {
         changePanel("createAccount");
+    }
+
+    public void changeToCreateLoanPanel() {
+        changePanel("createLoan");
     }
 
     public void changeToSearchPanel() {

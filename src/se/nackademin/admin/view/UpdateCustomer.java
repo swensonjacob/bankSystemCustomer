@@ -21,19 +21,16 @@ public class UpdateCustomer {
     private JTextField pinCode;
     private JLabel errorText;
     private JButton backButton;
+    private Customer currentCustomer;
 
     public UpdateCustomer(PanelHandler panelHandler) {
 
         this.panelHandler = panelHandler;
         errorText = createLabel("",0);
         firstName = createTextField();
-        firstName.setText("firstname");
         lastName=createTextField();
-        lastName.setText("lastname");
         personalNumber=createTextField();
-        personalNumber.setText("p-number");
         pinCode = createTextField();
-        pinCode.setText("pincode");
 
         JPanel createCustomerCenterPanel = SwingSetup.createPanel();
         updateButton = createButton("Uppdatera kund");
@@ -137,6 +134,18 @@ public class UpdateCustomer {
 
     public void setEraseButton(JButton eraseButton) {
         this.eraseButton = eraseButton;
+    }
+
+    public Customer getCurrentCustomer() {
+        return currentCustomer;
+    }
+
+    public void setCurrentCustomer(Customer currentCustomer) {
+        this.currentCustomer = currentCustomer;
+        firstName.setText(currentCustomer.getFirstName());
+        lastName.setText(currentCustomer.getLastName());
+        personalNumber.setText(currentCustomer.getPersonalNumber());
+        pinCode.setText(currentCustomer.getPinCode());
     }
 }
 

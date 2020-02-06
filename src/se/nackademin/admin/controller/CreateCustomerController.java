@@ -21,7 +21,15 @@ public class CreateCustomerController {
 
             if (e.getSource()==controller.getPanelHandler().getCreateCustomerView().getCreateButton()) {
                 if (!textFieldEmpty()) {
-                    controller.getPanelHandler().changeToAdminMenu(controller.getAdminMenuController().getNewMenuButtonListener());
+                    controller.getRepository().addNewCustomer(controller.getPanelHandler().getCreateCustomerView().getFirstName().getText(),
+                            controller.getPanelHandler().getCreateCustomerView().getLastName().getText(),
+                            controller.getPanelHandler().getCreateCustomerView().getPersonalNumber().getText(),
+                            controller.getPanelHandler().getCreateCustomerView().getPinCode().getText());
+                    controller.getPanelHandler().changeToAdminMenu(controller.getAdminMenuController().getNewMenuButtonListener(),
+                            controller.getLoansFromCurrentCustomer(),
+                            controller.getAccountsFromCurrentCustomer(),
+                            controller.getAdminMenuController().getloanButtonListener(),
+                            controller.getAdminMenuController().getAccountButtonListener());
                 } else {
                     controller.getPanelHandler().getCreateCustomerView().getErrorText().setText("Samtliga fält måste fyllas i");
                 }

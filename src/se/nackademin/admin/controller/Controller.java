@@ -1,8 +1,12 @@
 package se.nackademin.admin.controller;
 
+import se.nackademin.admin.model.Account;
 import se.nackademin.admin.model.Customer;
+import se.nackademin.admin.model.Loan;
 import se.nackademin.admin.repository.Repository;
 import se.nackademin.admin.view.PanelHandler;
+
+import java.util.List;
 
 public class Controller {
 
@@ -15,7 +19,9 @@ public class Controller {
     private LoanInfoController loanInfoController;
     private LoginViewController loginViewController;
     private SearchController searchController;
-    private UpdateCustomerController updateCustomer;
+    private UpdateCustomerController updateCustomerController;
+    private CreateLoanController createLoanController;
+    private CreateAccountController createAccountController;
 
 
     public Controller() {
@@ -28,7 +34,10 @@ public class Controller {
         loanInfoController = new LoanInfoController(this);
         loginViewController = new LoginViewController(this);
         searchController =new SearchController(this);
-        updateCustomer = new UpdateCustomerController(this);
+        updateCustomerController = new UpdateCustomerController(this);
+        createLoanController = new CreateLoanController(this);
+        createAccountController = new CreateAccountController(this);
+
 
     }
         private boolean personalNumberExists(String personalNr) {
@@ -107,11 +116,18 @@ public class Controller {
         this.searchController = searchController;
     }
 
-    public UpdateCustomerController getUpdateCustomer() {
-        return updateCustomer;
+    public UpdateCustomerController getUpdateCustomerController() {
+        return updateCustomerController;
     }
 
-    public void setUpdateCustomer(UpdateCustomerController updateCustomer) {
-        this.updateCustomer = updateCustomer;
+    public void setUpdateCustomerController(UpdateCustomerController updateCustomerController) {
+        this.updateCustomerController = updateCustomerController;
+    }
+
+    public List<Loan> getLoansFromCurrentCustomer() {
+       return repository.getLoansFromCustomer(currentCustomer);
+    }
+    public List<Account> getAccountsFromCurrentCustomer() {
+        return repository.getAccountFromCustomer(currentCustomer);
     }
 }

@@ -18,23 +18,45 @@ public class AccountInfoController {
         this.controller = controller;
     }
 
-    class withdrawFromAccount implements ActionListener {
+    class AccountinfoListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            int accountId = controller.getPanelHandler().getAccountInfo().getCurrentAccount().getId();
-            String amount = controller.getPanelHandler().getAccountInfo().getWithdrawSum().getText();
-            int minusAmount = Integer.parseInt(amount);
 
+            if (e.getSource() == controller.getPanelHandler().getAccountInfo().getBackButton()) {
+                changeToAdminMenu();
+            } else if (e.getSource() == controller.getPanelHandler().getAccountInfo().getWithdrawButton()) {
+                int withdrawsum = Integer.parseInt(controller.getPanelHandler().getAccountInfo().getWithdrawSum().getText());
+                withdrawsum =  withdrawsum -  (withdrawsum * 2);
+                controller.getRepository().updateBalanceForAccount(getCurrentAccount().getId(), withdrawsum);
+                updateAccountPanel();
+            } else if (e.getSource() == controller.getPanelHandler().getAccountInfo().getDepositButton()) {
+                controller.getRepository().updateBalanceForAccount(getCurrentAccount().getId(),
+                        Integer.parseInt(controller.getPanelHandler().getAccountInfo().getWithdrawSum().getText()));
+                updateAccountPanel();
+            } else if (e.getSource() == controller.getPanelHandler().getAccountInfo().getChangeInterestButton()) {
+                controller.getRepository().changeRateForAccount(getCurrentAccount().getId(),
+                        Double.parseDouble(controller.getPanelHandler().getAccountInfo().getInterestField().getText()));
+                updateAccountPanel();
+            } else if (e.getSource() == controller.getPanelHandler().getAccountInfo().getDeleteButton()) {
+                controller.getRepository().deleteAccount(controller.getPanelHandler().getAccountInfo().getCurrentAccount().getId());
+                changeToAdminMenu();
+            } else if(e.getSource() == controller.getPanelHandler().getAccountInfo().getShowHistory()) {
+                String startDate = controller.getPanelHandler().getAccountInfo().getStartDate().getText();
+                String endDate = controller.getPanelHandler().getAccountInfo().getEndDate().getText();
 
-            minusAmount *= -1;
-            controller.getRepository().updateBalanceForAccount(accountId,minusAmount);
-            List<Account> accounts = controller.getRepository().getAccountFromCustomer(controller.getCurrentCustomer());
-            accounts.forEach(a -> {
-//                if(a.getId() == controller.getPanelHandler().getAccountInfo().getCurrentAccount().getId()) {
-//                    controller.getPanelHandler().changeToAccountPanel()                           //Lägg till den panel som ska va här
-//                }
-            });
+                if (DateValidator.isValid(startDate) && DateValidator.isValid(endDate)) {
+                    if (DateValidator.isStartDateBeforeEndDate(startDate,endDate)) {
+                        List<AccountHistory> filterdAccounts = controller.getRepository().getAccountHistory(startDate,endDate);
+                        controller.getPanelHandler().getAccountInfo().setFilteredTransactionHistory(filterdAccounts);
+
+                    } else {
+                        JOptionPane.showMessageDialog(null, "datumen är i fel ordning.");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "ej korrekta datum, ange YYYY-MM-DD");
+                }
+            }
 
         }
 
@@ -57,7 +79,19 @@ public class AccountInfoController {
 //                    controller.getPanelHandler().changeToAccountPanel()                           //Lägg till den panel som ska va här
 //                }
             });
-
+//            int accountId = controller.getPanelHandler().getAccountInfo().getCurrentAccount().getId();
+//            String amount = controller.getPanelHandler().getAccountInfo().getWithdrawSum().getText();
+//            int minusAmount = Integer.parseInt(amount);
+//
+//
+//            minusAmount *= -1;
+//            controller.getRepository().updateBalanceForAccount(accountId,minusAmount);
+//            List<Account> accounts = controller.getRepository().getAccountFromCustomer(controller.getCurrentCustomer());
+//            accounts.forEach(a -> {
+//                if(a.getId() == controller.getPanelHandler().getAccountInfo().getCurrentAccount().getId()) {
+//                    controller.getPanelHandler().changeToAccountPanel()                           //Lägg till den panel som ska va här
+//                }
+//            });
 
         }
     }
@@ -79,9 +113,6 @@ public class AccountInfoController {
 //                }
                     });
 
-
-
-
                 } else {
                     JOptionPane.showMessageDialog(null, "datumen är i fel ordning.");
                 }
@@ -90,6 +121,30 @@ public class AccountInfoController {
             }
 
         }
+    }
+
+    public ActionListener getAccountInfoListener() {
+        return new AccountinfoListener();
+    }
+
+    public Account getCurrentAccount() {
+       return controller.getPanelHandler().getAccountInfo().getCurrentAccount();
+    }
+
+    public void updateAccountPanel() {
+        List<Account> accounts = controller.getRepository().getAccountFromCustomer(controller.getCurrentCustomer());
+        accounts.forEach(a -> {
+            if (a.getId() == controller.getPanelHandler().getAccountInfo().getCurrentAccount().getId()) {
+                controller.getPanelHandler().changeToAccountPanel(getAccountInfoListener(),a);
+            }
+        });
+    }
+    public void changeToAdminMenu() {
+        controller.getPanelHandler().changeToAdminMenu(controller.getAdminMenuController().getNewMenuButtonListener(),
+                controller.getLoansFromCurrentCustomer(),
+                controller.getAccountsFromCurrentCustomer(),
+                controller.getAdminMenuController().getloanButtonListener(),
+                controller.getAdminMenuController().getAccountButtonListener());
     }
 
 

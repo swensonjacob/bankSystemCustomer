@@ -16,20 +16,19 @@ public class LoanInfo {
     private PanelHandler panelHandler;
     private DefaultListModel loanPayments;
     private JButton backButton;
-
     private JTextField rentInput;
     private JButton editRent;
     private JTextField loanTermInput;
     private JButton editTerm;
 
-    public LoanInfo(PanelHandler panelHandler, ActionListener listener) {
+    public LoanInfo(PanelHandler panelHandler, ActionListener listener, Loan loan) {
 
         this.panelHandler = panelHandler;
-
+        currentLoan = loan;
         loanPayments = new DefaultListModel();
 
 
-        //calculateDownPaymentPlan(10000,24,2.4);
+        calculateDownPaymentPlan(currentLoan.getAmount(),currentLoan.getLoanTime(),currentLoan.getInterest().getInterestRate());
         JList list = createJList(loanPayments);
 
         backButton = createBackButton();
@@ -48,8 +47,8 @@ public class LoanInfo {
         loanInfoPanel.add(infoContainer);
         infoContainer.setLayout(new GridLayout(1,2, 10, 10));
 
-        infoContainer.add(createBigLabel("Lån: ", 2));
-        infoContainer.add(createLabel("Kapitalskuld: " , 2 ));
+        infoContainer.add(createBigLabel("Lån: " + currentLoan.getLoanNumber(), 2));
+        infoContainer.add(createLabel("Kapitalskuld: " + currentLoan.getAmount(), 2 ));
 
         JPanel inputPanel = SwingSetup.createPanel();
         loanInfoPanel.add(inputPanel);
@@ -57,13 +56,17 @@ public class LoanInfo {
 
         rentInput = SwingSetup.createTextField();
         editRent = SwingSetup.createButton("Verkställ");
+        editRent.addActionListener(listener);
 
         inputPanel.add(SwingSetup.createLabel("Ändra ränta:",0));
+        rentInput.setText(Double.toString(currentLoan.getInterest().getInterestRate()));
         inputPanel.add(rentInput);
         inputPanel.add(editRent);
 
         loanTermInput = SwingSetup.createTextField();
         editTerm = SwingSetup.createButton("Verkställ");
+        editTerm.addActionListener(listener);
+        loanTermInput.setText(Integer.toString(currentLoan.getLoanTime()));
 
         inputPanel.add(SwingSetup.createLabel("Ändra lånetid:",0));
         inputPanel.add(loanTermInput);
@@ -97,7 +100,61 @@ public class LoanInfo {
             count++;
         }
 
+    }
 
+    public JButton getBackButton() {
+        return backButton;
+    }
 
+    public void setBackButton(JButton backButton) {
+        this.backButton = backButton;
+    }
+
+    public JTextField getRentInput() {
+        return rentInput;
+    }
+
+    public void setRentInput(JTextField rentInput) {
+        this.rentInput = rentInput;
+    }
+
+    public JButton getEditRent() {
+        return editRent;
+    }
+
+    public void setEditRent(JButton editRent) {
+        this.editRent = editRent;
+    }
+
+    public JTextField getLoanTermInput() {
+        return loanTermInput;
+    }
+
+    public void setLoanTermInput(JTextField loanTermInput) {
+        this.loanTermInput = loanTermInput;
+    }
+
+    public JButton getEditTerm() {
+        return editTerm;
+    }
+
+    public void setEditTerm(JButton editTerm) {
+        this.editTerm = editTerm;
+    }
+
+    public Loan getCurrentLoan() {
+        return currentLoan;
+    }
+
+    public void setCurrentLoan(Loan currentLoan) {
+        this.currentLoan = currentLoan;
+    }
+
+    public PanelHandler getPanelHandler() {
+        return panelHandler;
+    }
+
+    public void setPanelHandler(PanelHandler panelHandler) {
+        this.panelHandler = panelHandler;
     }
 }

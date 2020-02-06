@@ -29,7 +29,10 @@ public class UpdateCustomerController {
                                 controller.getPanelHandler().getUpdateCustomerView().getPinCode().getText())) {
                            JOptionPane.showMessageDialog(null,"Kund uppdaterad");
                        }
-                        controller.getPanelHandler().changeToAdminMenu(controller.getAdminMenuController().getNewMenuButtonListener());
+                        controller.getPanelHandler().changeToAdminMenu(controller.getAdminMenuController().getNewMenuButtonListener(),
+                                controller.getLoansFromCurrentCustomer(), controller.getAccountsFromCurrentCustomer(),
+                                controller.getAdminMenuController().getloanButtonListener(),
+                                controller.getAdminMenuController().getAccountButtonListener());
 
                     } else {
                         controller.getPanelHandler().getCreateCustomerView().getErrorText().setText("Samtliga fält måste fyllas i");
@@ -48,9 +51,10 @@ public class UpdateCustomerController {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                controller.getPanelHandler().changeToAdminMenu(controller.getAdminMenuController().getNewMenuButtonListener());
-
-
+                controller.getPanelHandler().changeToAdminMenu(controller.getAdminMenuController().getNewMenuButtonListener(),
+                        controller.getLoansFromCurrentCustomer(), controller.getAccountsFromCurrentCustomer(),
+                        controller.getAdminMenuController().getloanButtonListener(),
+                        controller.getAdminMenuController().getAccountButtonListener());
             }
         }
 

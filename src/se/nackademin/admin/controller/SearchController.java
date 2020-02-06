@@ -20,7 +20,14 @@ public class SearchController {
 
             if (controller.getRepository().verifyPersonalNumber(personalNR)) {
                 controller.setCurrentCustomer(controller.getRepository().getCurrCustomer(personalNR));
-                controller.getPanelHandler().changeToAdminMenu(controller.getAdminMenuController().getNewMenuButtonListener());
+                controller.getPanelHandler().getUpdateCustomerView().setCurrentCustomer(controller.getCurrentCustomer());
+
+                controller.getPanelHandler().changeToAdminMenu(controller.getAdminMenuController().getNewMenuButtonListener(),
+                        controller.getLoansFromCurrentCustomer(),
+                        controller.getAccountsFromCurrentCustomer(),
+                        controller.getAdminMenuController().getloanButtonListener(),
+                        controller.getAdminMenuController().getAccountButtonListener());
+
             } else {
                 controller.getPanelHandler().getSearchView().getErrorText().setText("Felaktigt personnummer");
             }

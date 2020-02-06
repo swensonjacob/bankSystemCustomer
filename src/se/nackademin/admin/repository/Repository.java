@@ -120,7 +120,7 @@ public class Repository {
             }
 
             for (Loan loan : loans) {
-                pstatementInterest.setInt(1, loan.getId());
+                pstatementInterest.setInt(1, loan.getInterestId());
                 result = pstatementInterest.executeQuery();
                 while (result.next()) {
                     Interest interest = new Interest();

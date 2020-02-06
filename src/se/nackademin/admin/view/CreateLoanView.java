@@ -11,6 +11,7 @@ import static se.nackademin.customer.view.SwingSetup.*;
 public class CreateLoanView {
 
     JButton createButton;
+    JButton backButton;
 
     PanelHandler panelHandler;
     private JTextField amount;
@@ -30,16 +31,14 @@ public class CreateLoanView {
 
         JPanel createAccountCenterPanel = SwingSetup.createPanel();
         createButton = createButton("Bevilja");
+        backButton = createButton("Tillbaka");
 
-        createAccountCenterPanel.setLayout(new GridLayout(11, 1, 10, 10));
+        createAccountCenterPanel.setLayout(new GridLayout(12, 1, 10, 10));
 
         createAccountCenterPanel.add(SwingSetup.createBigLabel("Bevilja Lån", 2));
 
         createAccountCenterPanel.add(createLabel("Summa", 2));
         createAccountCenterPanel.add(amount);
-
-        createAccountCenterPanel.add(createLabel("Kontonamn", 2));
-        createAccountCenterPanel.add(accountName);
 
         createAccountCenterPanel.add(createLabel("Lånnummer", 2));
         createAccountCenterPanel.add(loanNumb);
@@ -49,7 +48,8 @@ public class CreateLoanView {
 
         createAccountCenterPanel.add(createLabel("", 0));
         createAccountCenterPanel.add(createButton);
-        createAccountCenterPanel.setBorder(new EmptyBorder(0, 220, 80, 220));
+        createAccountCenterPanel.add(backButton);
+        createAccountCenterPanel.setBorder(new EmptyBorder(0, 220, 60, 220));
 
         JPanel createAccountPanel = createPanel();
         createAccountPanel.setLayout(new BorderLayout());
@@ -65,6 +65,7 @@ public class CreateLoanView {
 
     public void addListener(ActionListener listener) {
         createButton.addActionListener(listener);
+        backButton.addActionListener(listener);
     }
 
     public JLabel getErrorText() {
@@ -92,7 +93,7 @@ public class CreateLoanView {
     }
 
     public JTextField getLoanNumbName() {
-        return this.accountName;
+        return this.loanNumb;
     }
 
     public void setLoanNumb(JTextField numb) {
@@ -105,5 +106,21 @@ public class CreateLoanView {
 
     public void setLoanTime(JTextField time) {
         this.loanTime = time;
+    }
+
+    public JButton getCreateButton() {
+        return createButton;
+    }
+
+    public void setCreateButton(JButton createButton) {
+        this.createButton = createButton;
+    }
+
+    public JButton getBackButton() {
+        return backButton;
+    }
+
+    public void setBackButton(JButton backButton) {
+        this.backButton = backButton;
     }
 }
